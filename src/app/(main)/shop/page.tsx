@@ -10,7 +10,10 @@ import DraggableStickers from './DraggableStickers';
 import './page.css';
 
 export const metadata: Metadata = {
-  title: 'Resources | Treon Studio',
+  title: 'Resources & Tools | TreonStudio — Creative House from Indonesia',
+  description:
+    'Kumpulan resource, tools, dan template dari TreonStudio untuk developer, desainer, dan kreator digital Indonesia. Gratis dan open source.',
+  keywords: ['developer tools Indonesia', 'free design resources', 'template website gratis', 'TreonStudio resources'],
 };
 
 export default async function Home() {

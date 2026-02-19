@@ -37,7 +37,7 @@ export default function Footer({ children }: { children?: ReactNode }) {
             href="https://treonstudio.com"
             className="rounded-sm underline"
           >
-            Treon Studio
+            TreonStudio
           </a>
         </div>
       </footer>

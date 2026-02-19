@@ -18,7 +18,6 @@ import {
   SneakPeekCard,
   StatusCard,
   ToolsCard,
-  WorkspaceCard,
 } from './components';
 import Header from './components/Header';
 import Heading from './components/Heading';
@@ -27,6 +26,7 @@ import './page.css';
 
 import { Metadata } from 'next';
 
+import { getAllBlogs } from '~/src/lib/blog';
 import SystemMetricsCollector from '~/src/lib/SystemMetricsCollector';
 import { withTimeout } from '~/src/util';
 
@@ -44,7 +44,6 @@ const getCards = ({ sketchbookCard }: { sketchbookCard: boolean }) => [
   { gridArea: '👋', Component: BioCard },
   { gridArea: '👔', Component: ExperienceCard },
   { gridArea: '💬', Component: StatusCard },
-  { gridArea: '📌', Component: WorkspaceCard },
   { gridArea: '🖌️', Component: PantoneCard },
   { gridArea: '🎨', Component: ColorThemeCard },
   { gridArea: '👀', Component: SneakPeekCard },
@@ -90,15 +89,17 @@ const fetchSystemMetrics = ({ timeout = 1000 }) => {
 };
 
 export const metadata: Metadata = {
-  title: 'About | Treon Studio',
+  title: 'About | TreonStudio — Creative House & Software House Jakarta',
   description:
-    'Technology partner based in Jakarta, Indonesia. Specializing in web development, mobile development, and design systems for SMEs, startups, and established businesses.',
+    'TreonStudio adalah creative house & software house di Jakarta, Indonesia. Kami bantu brand, startup, dan UMKM membangun website, aplikasi mobile, dan design system yang berdampak.',
+  keywords: ['about TreonStudio', 'software house Jakarta', 'creative house Indonesia', 'tentang TreonStudio', 'digital agency Jakarta'],
 };
 
 export default async function Home() {
-  const [currentCount, metrics] = await Promise.all([
+  const [currentCount, metrics, blogs] = await Promise.all([
     fetchSneakPeekCount({ timeout: 1000 }),
     fetchSystemMetrics({ timeout: 1000 }),
+    getAllBlogs(),
   ]);
 
   return (
@@ -109,21 +110,11 @@ export default async function Home() {
       <div className="glow pointer-events-none fixed h-[400px] w-[400px] rounded-full blur-3xl" />
       <div className="flex flex-col px-5 py-5 md:py-12">
         <main className="pb-12">
-          <Heading className="mb-8" />
-          <div className="mb-20 flex flex-col items-start gap-2 text-text-primary xxs:flex-row xxs:items-center xxs:gap-4">
-            <div>Our Services</div>
-            <div className="flex gap-2">
-              {projectLinks.map(({ label, ...linkProps }) => (
-                <Button size="sm" asChild key={label}>
-                  <Link {...linkProps}>{label}</Link>
-                </Button>
-              ))}
-            </div>
-          </div>
+          <Heading className="mb-20" />
           <div className="home-cards">
             {getCards({ sketchbookCard: true }).map(({ gridArea, Component }, i) => (
               <div key={i} style={{ gridArea }}>
-                <Component currentCount={currentCount || 0} metrics={metrics} />
+                <Component currentCount={currentCount || 0} metrics={metrics} blogs={blogs} />
               </div>
             ))}
           </div>

@@ -11,7 +11,7 @@ import { ArrowRightIcon } from '~/src/components/icons';
 import { cn } from '~/src/util';
 
 const links = {
-  '/work': { label: 'Products', width: 5.5 },
+  '/work': { label: 'Works', width: 5.5 },
   '/': { label: 'About', width: 4.55 },
   '/shop': { label: 'Resources', width: 6.2 },
   '/contact': { label: 'Contact', width: 5.4 },

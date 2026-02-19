@@ -7,9 +7,10 @@ import ProjectsGrid from './components/ProjectsGrid';
 import { Filter, projects } from './constants';
 
 export const metadata: Metadata = {
-  title: 'Products | Treon Studio',
+  title: 'Portfolio & Produk | TreonStudio — Jasa Web & Mobile Development Jakarta',
   description:
-    'Explore our products and solutions including Trenzo, Investrack, Munaqadh, and community projects like Kopod, Radas, and Muslimfy.',
+    'Lihat portfolio TreonStudio — dari Trenzo (market research), Investrack (investor relations), hingga Munaqadh (donasi). Jasa pembuatan website, aplikasi mobile, dan design system di Jakarta, Indonesia.',
+  keywords: ['portfolio TreonStudio', 'jasa pembuatan website Jakarta', 'contoh website company profile', 'jasa bikin aplikasi mobile', 'Trenzo', 'Investrack'],
 };
 
 export default async function Work({ searchParams }: { searchParams: Promise<{ f?: Filter }> }) {

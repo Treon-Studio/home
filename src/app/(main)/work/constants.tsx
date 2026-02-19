@@ -158,7 +158,7 @@ export type Project = (StaticProject | ComponentProject) & {
 };
 
 // aspect - width/height - for grid layout
-// Treon Studio Products and Community Projects
+// TreonStudio Products and Community Projects
 export const projects: Project[] = [
   // Main Products
   {

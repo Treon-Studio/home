@@ -30,11 +30,11 @@ export default function Header({ children }: { children?: ReactNode }) {
         aria-label="Go to Home page"
       >
         <LogoIcon
-          className={cn('transition-all duration-300', {
+          className={cn('text-[#FF5A00] transition-all duration-300', {
             'text-theme-1': y > headerTriggerY,
           })}
         />
-        <span className="hidden pr-1 md:inline">Treon Studio</span>
+        <span className="hidden pr-1 md:inline">TreonStudio</span>
       </Link>
       {children && (
         <div className="order-3 mt-4 w-full lg:order-0 lg:mt-0 lg:w-auto">{children}</div>

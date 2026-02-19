@@ -14,8 +14,8 @@ const inter = Inter({
 
 const archivo = Archivo({
   subsets: ['latin'],
-  weight: ['300'],
   variable: '--font-archivo',
+  axes: ['wdth'],
 });
 
 const ibmPlexMono = IBM_Plex_Mono({
@@ -31,24 +31,138 @@ const libertinusSerif = Libertinus_Serif({
 });
 
 export const metadata: Metadata = {
-  title: 'Treon Studio - Digital Business Solutions',
+  title: 'TreonStudio — Creative House from Indonesia',
   description:
-    'Technology partner specializing in digital business solutions. Web development, mobile development, and design systems for SMEs, startups, and established businesses.',
+    'TreonStudio adalah creative house dari Indonesia yang menghadirkan solusi digital — web development, mobile app, dan design system. Kami membantu brand, startup, dan UMKM membangun produk digital yang berdampak. Berbasis di Jakarta.',
   metadataBase:
     process.env.NODE_ENV === 'production' ? new URL('https://treonstudio.com') : undefined,
-  keywords: ['web development', 'mobile development', 'design system', 'digital solutions', 'Jakarta', 'Indonesia'],
+  keywords: [
+    'TreonStudio', 'creative house Indonesia', 'software house Jakarta',
+    'jasa pembuatan website', 'jasa web developer Jakarta', 'jasa bikin aplikasi',
+    'web development Indonesia', 'mobile app development Jakarta',
+    'design system agency', 'UI UX design Indonesia',
+    'digital agency Jakarta', 'startup studio Indonesia',
+    'jasa desain UI UX', 'react developer Indonesia', 'next.js agency',
+  ],
+  icons: {
+    icon: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
   openGraph: {
-    title: 'Treon Studio - Digital Business Solutions',
-    description: 'Technology partner specializing in digital business solutions.',
-    siteName: 'Treon Studio',
+    title: 'TreonStudio — Creative House from Indonesia',
+    description: 'Creative house dari Indonesia — jasa web development, mobile app, dan design system untuk brand, startup, dan UMKM.',
+    siteName: 'TreonStudio',
     locale: 'id_ID',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Treon Studio - Digital Business Solutions',
-    description: 'Technology partner specializing in digital business solutions.',
+    title: 'TreonStudio — Creative House from Indonesia',
+    description: 'Creative house dari Indonesia — jasa web development, mobile app, dan design system untuk brand, startup, dan UMKM.',
   },
+};
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': 'https://treonstudio.com/#organization',
+      name: 'TreonStudio',
+      alternateName: ['Treon Studio', 'treon studio', 'treonstudio'],
+      url: 'https://treonstudio.com',
+      logo: 'https://treonstudio.com/favicon.ico',
+      description:
+        'TreonStudio adalah creative house dari Indonesia yang menghadirkan solusi digital — web development, mobile app, dan design system untuk brand, startup, dan UMKM.',
+      foundingDate: '2024',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Jakarta',
+        addressRegion: 'DKI Jakarta',
+        addressCountry: 'ID',
+      },
+      areaServed: [
+        { '@type': 'Country', name: 'Indonesia' },
+        { '@type': 'City', name: 'Jakarta' },
+      ],
+      sameAs: [
+        'https://twitter.com/treonstudio',
+        'https://github.com/treonstudio',
+        'https://www.linkedin.com/company/treonstudio/',
+      ],
+      contactPoint: {
+        '@type': 'ContactPoint',
+        email: 'hello@treonstudio.com',
+        telephone: '+6285158802425',
+        contactType: 'customer service',
+        availableLanguage: ['Indonesian', 'English'],
+      },
+      knowsAbout: [
+        'Web Development',
+        'Mobile App Development',
+        'UI/UX Design',
+        'Design System',
+        'React',
+        'Next.js',
+        'React Native',
+        'Flutter',
+        'Branding',
+      ],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://treonstudio.com/#website',
+      url: 'https://treonstudio.com',
+      name: 'TreonStudio',
+      description: 'Creative House from Indonesia — Jasa Web Development, Mobile App, dan Design System',
+      publisher: { '@id': 'https://treonstudio.com/#organization' },
+      inLanguage: ['id', 'en'],
+    },
+    {
+      '@type': 'ProfessionalService',
+      '@id': 'https://treonstudio.com/#service',
+      name: 'TreonStudio',
+      provider: { '@id': 'https://treonstudio.com/#organization' },
+      serviceType: [
+        'Web Development',
+        'Mobile App Development',
+        'UI/UX Design',
+        'Design System',
+        'Branding',
+      ],
+      areaServed: { '@type': 'Country', name: 'Indonesia' },
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Digital Services',
+        itemListElement: [
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: 'Web Development',
+              description: 'Jasa pembuatan website profesional — company profile, landing page, web app, dan e-commerce.',
+            },
+          },
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: 'Mobile App Development',
+              description: 'Jasa pembuatan aplikasi mobile iOS dan Android — React Native, Flutter, dan native development.',
+            },
+          },
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: 'Design System & UI/UX',
+              description: 'Jasa desain UI/UX dan pembuatan design system — component library, brand guidelines, dan design tokens.',
+            },
+          },
+        ],
+      },
+    },
+  ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -58,6 +172,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
       className={`${inter.variable} ${archivo.variable} ${ibmPlexMono.variable} ${libertinusSerif.variable} font-sans`}
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body
         className={`${inter.variable} ${archivo.variable} ${ibmPlexMono.variable} ${libertinusSerif.variable} font-sans`}
       >

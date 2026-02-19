@@ -70,8 +70,8 @@ export default function SneakPeekCard({ currentCount }: { currentCount: number }
       </CardTitle>
       <div className="mb-20 flex items-start justify-between xl:mb-[120px]">
         <div className="font-archivo text-3xl md:text-4xl">
-          POS <br className="hidden md:block" />
-          Himajin
+          Web <br className="hidden md:block" />
+          Tenang.ai
         </div>
       </div>
       <div className="relative flex flex-col gap-4">

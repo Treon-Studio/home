@@ -1,21 +1,18 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import { ComponentType, useEffect, useRef, useState } from 'react';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 
-import DynamicVHVarsSetter from '~/src/components/DynamicVHVarsSetter';
-import { ExitIcon, LinkIcon } from '~/src/components/icons';
-import Button from '~/src/components/ui/Button';
+import { LinkIcon } from '~/src/components/icons';
 import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-  DialogTrigger,
-} from '~/src/components/ui/Dialog';
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerTitle,
+  DrawerTrigger,
+} from '~/src/components/ui/Drawer';
 import Image from '~/src/components/ui/Image';
 import Tag from '~/src/components/ui/Tag';
 import { useViewLogger } from '~/src/components/ViewCounter';
@@ -24,7 +21,6 @@ import { cn } from '~/src/util';
 
 import { Project } from '../constants';
 import Card from './Card';
-import Carousel from './Carousel';
 
 const dynamicProjects: Record<string, ComponentType> = {
   'illustrated-cards': dynamic(() => import('../[slug]/components/Cards'), {
@@ -67,7 +63,6 @@ export default function ProjectsGrid({ projects }: Props) {
 
   return (
     <div className="flex-1 px-5 py-10" ref={containerRef}>
-      <DynamicVHVarsSetter />
       <ResponsiveMasonry columnsCountBreakPoints={{ 750: 2, 900: 3 }}>
         <Masonry gutter={mobile ? '0.5rem' : '1rem'}>
           {projects.map((project, i) => {
@@ -75,7 +70,7 @@ export default function ProjectsGrid({ projects }: Props) {
               project.type === 'project' && project.dynamic ? dynamicProjects[project.slug!] : null;
 
             return project.type === 'project' ? (
-              <Dialog
+              <Drawer
                 key={project.slug}
                 onOpenChange={(open) => {
                   if (open) {
@@ -83,71 +78,78 @@ export default function ProjectsGrid({ projects }: Props) {
                   }
                 }}
               >
-                <DialogContent className="flex h-full max-h-[calc(var(--vh,1vh)*100)] max-w-(--breakpoint-md) flex-col pb-6 sm:rounded-[20px] md:max-h-[min(calc(var(--vh,1vh)*100),800px)]">
-                  <div
-                    className={cn('-mx-3 h-[90vw] md:h-auto md:flex-1', {
-                      '-mt-3 h-auto': Boolean(DynamicComponent),
-                    })}
-                  >
-                    {DynamicComponent ? (
-                      <div className="relative h-full">
-                        <DynamicComponent />
-                        <DialogClose aria-label="Close dialog" asChild>
-                          <Button
-                            iconLeft={<ExitIcon className="h-6 w-6" />}
-                            className="absolute right-5 top-5 opacity-50 group-hover/card:opacity-100 focus-visible:opacity-100"
-                          />
-                        </DialogClose>
-                      </div>
-                    ) : (
-                      <Carousel
-                        className=""
-                        defaultIndex={0}
-                        sources={project.images!}
-                        actions={
-                          <DialogClose aria-label="Close dialog" asChild>
-                            <Button
-                              iconLeft={<ExitIcon className="h-6 w-6" />}
-                              className="opacity-50 group-hover/card:opacity-100 focus-visible:opacity-100"
-                            />
-                          </DialogClose>
-                        }
-                      />
+                <DrawerContent className="min-h-[95%] max-h-[95%] justify-between gap-4 lg:max-w-[75%]">
+                  <div className="mx-auto flex w-[85%] flex-col gap-2 pt-4">
+                    <DrawerTitle className="text-sm font-semibold leading-tight">
+                      {project.title}
+                    </DrawerTitle>
+                    {project.description && (
+                      <DrawerDescription className="text-xs opacity-50">
+                        {project.description}
+                      </DrawerDescription>
                     )}
+                    <div className="flex flex-wrap items-center gap-2">
+                      {project.tags?.map((t) => (
+                        <Tag key={t} className="text-sm text-text-secondary">
+                          {t}
+                        </Tag>
+                      ))}
+                      {project.link && (
+                        <Tag asChild>
+                          <a
+                            className="flex items-center gap-2 text-sm underline"
+                            href={project.link}
+                            target="_blank"
+                            rel="noreferrer noopener"
+                          >
+                            {hostname(project.link)}
+                            <LinkIcon className="h-5 w-5" />
+                          </a>
+                        </Tag>
+                      )}
+                    </div>
                   </div>
 
-                  <div className="flex flex-col overflow-auto md:overflow-auto">
-                    <div>
-                      <DialogTitle className="mb-4">{project.title}</DialogTitle>
-                      <div className="flex flex-wrap items-center gap-2">
-                        {project.tags?.map((t) => (
-                          <Tag key={t} className="text-sm text-text-secondary">
-                            {t}
-                          </Tag>
-                        ))}
-                        {project.link && (
-                          <Tag asChild>
-                            <a
-                              className="flex items-center gap-2 text-sm underline"
-                              href={project.link}
-                              target="_blank"
-                              rel="noreferrer noopener"
-                            >
-                              {hostname(project.link)}
-                              <LinkIcon className="h-5 w-5" />
-                            </a>
-                          </Tag>
-                        )}
+                  {DynamicComponent ? (
+                    <div className="flex-1 overflow-y-auto">
+                      <div className="mx-auto mb-16 flex max-w-[85%] flex-col">
+                        <DynamicComponent />
                       </div>
                     </div>
-                    {project.description && (
-                      <DialogDescription className="mt-4 overflow-auto border-t border-t-theme-2 pt-4 leading-7 text-text-secondary md:max-h-[200px]">
-                        {project.description}
-                      </DialogDescription>
-                    )}
-                  </div>
-                </DialogContent>
-                <DialogTrigger asChild disabled={!Boolean(project.images) && !project.dynamic}>
+                  ) : (
+                    <div className="flex-1 overflow-y-auto">
+                      <div className="mx-auto mb-16 flex max-w-[85%] flex-col">
+                        <AnimatePresence mode="wait">
+                          <div className="flex w-full flex-col gap-8">
+                            {project.images?.map((image, imgIndex) => (
+                              <motion.div
+                                key={imgIndex}
+                                initial={{ opacity: 0, y: 10, filter: 'blur(8px)' }}
+                                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                                exit={{ opacity: 0, y: -10, filter: 'blur(8px)' }}
+                                transition={{
+                                  duration: 1,
+                                  ease: 'easeOut',
+                                  delay: 0.25,
+                                }}
+                                className="relative w-full overflow-hidden rounded-3xl"
+                              >
+                                <Image
+                                  alt={`${project.title} - ${imgIndex + 1}`}
+                                  src={image}
+                                  fill
+                                  className="!static h-full w-full"
+                                  sizes="(max-width: 768px) 100vw, 700px"
+                                />
+                              </motion.div>
+                            ))}
+                          </div>
+                        </AnimatePresence>
+                      </div>
+                    </div>
+                  )}
+                </DrawerContent>
+                <DrawerTrigger asChild disabled={!Boolean(project.images) && !project.dynamic}>
                   <motion.button
                     key={project.slug}
                     initial={{ translateY: 75, opacity: 0 }}
@@ -198,8 +200,8 @@ export default function ProjectsGrid({ projects }: Props) {
                       </Tag>
                     </Card>
                   </motion.button>
-                </DialogTrigger>
-              </Dialog>
+                </DrawerTrigger>
+              </Drawer>
             ) : project.type === 'component' ? (
               <motion.div
                 initial={{ translateY: 100, opacity: 0 }}

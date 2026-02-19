@@ -1,98 +1,86 @@
 'use client';
 
-import { ArrowCounterClockwiseIcon, ArrowUpIcon } from '@phosphor-icons/react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { ComponentProps } from 'react';
+import { useRef } from 'react';
 
-import GridBackground from '~/src/components/GridBackground';
-import CardTitle from '~/src/components/ui/CardTitle';
-import { cn } from '~/src/util';
+import TextCursorProximity from '~/src/components/ui/TextCursorProximity';
 
 import Card from './Card';
-import useColorTheme, { colorThemes } from './useColorTheme';
 
-const slideRightProps: Partial<ComponentProps<typeof motion.div>> = {
-  initial: { opacity: 0, x: -50 },
-  animate: { opacity: 1, x: 0 },
-  exit: { opacity: 0, x: 50 },
-  transition: {
-    duration: 0.3,
-    type: 'tween',
-    ease: 'easeInOut',
+const styles = {
+  title: {
+    filter: {
+      from: 'blur(0px)',
+      to: 'blur(8px)',
+    },
+  },
+  details: {
+    filter: {
+      from: 'blur(0px)',
+      to: 'blur(4px)',
+    },
   },
 };
 
 export default function ColorThemeCard() {
-  const { colorTheme, removeColorTheme, setColorTheme } = useColorTheme();
-
-  const colorPicked = Boolean(colorTheme);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <Card>
-      <div className="flex h-full min-h-[210px] w-full flex-col content-center gap-3">
-        <div className="relative h-full">
-          <GridBackground className="absolute top-0 left-0 h-full w-full" />
-          <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center rounded-lg">
-            <div className="bg-theme-3 rounded-full p-px">
-              <div className="bg-panel-background relative flex gap-3 rounded-full px-2 py-2">
-                {colorThemes.map((t, i) => {
-                  const isActive = t === colorTheme;
-                  return (
-                    <button
-                      key={t}
-                      onClick={() => setColorTheme(t)}
-                      className={cn('flex items-center rounded-full')}
-                    >
-                      <div
-                        className={cn(
-                          'relative flex h-7 w-7 items-center justify-center rounded-full border-2 transition-all duration-200',
-                          {
-                            'border-theme-1': isActive,
-                            'border-theme-2': !isActive,
-                          },
-                        )}
-                      >
-                        {isActive ? (
-                          <motion.span
-                            className="bg-theme-1 absolute h-3 w-3 rounded-full"
-                            layoutId="color-theme-dot"
-                          />
-                        ) : (
-                          <span className="absolute">{t.toUpperCase()[0]}</span>
-                        )}
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
+    <Card className="!p-0 overflow-hidden">
+      <div
+        ref={containerRef}
+        className="flex min-h-[210px] w-full select-none flex-col justify-between bg-[#FF5A00] p-5 text-white"
+      >
+        <div className="-space-y-2 flex flex-col justify-center uppercase">
+          <TextCursorProximity
+            className="text-xl font-bold will-change-transform sm:text-2xl md:text-3xl"
+            styles={styles.title}
+            falloff="gaussian"
+            radius={100}
+            containerRef={containerRef}
+          >
+            HOUSE
+          </TextCursorProximity>
+          <TextCursorProximity
+            className="text-xl font-bold will-change-transform sm:text-2xl md:text-3xl"
+            styles={styles.title}
+            falloff="gaussian"
+            radius={100}
+            containerRef={containerRef}
+          >
+            OF TREON
+          </TextCursorProximity>
         </div>
-        <div className="h-6 shrink-0 overflow-hidden">
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div
-              className="flex h-full items-center justify-between"
-              key={String(colorPicked)}
-              {...slideRightProps}
-            >
-              <CardTitle variant="mono">
-                {colorTheme ? 'Bring back grayscale' : 'Pick a color'}
-              </CardTitle>
 
-              <button
-                aria-label="Reset color theme"
-                className="group rounded-full"
-                onClick={removeColorTheme}
-                disabled={!colorTheme}
-              >
-                {colorTheme ? (
-                  <ArrowCounterClockwiseIcon className="text-text-primary group-hover:text-theme-1 h-4 w-4 transition-all duration-200" />
-                ) : (
-                  <ArrowUpIcon className="text-text-primary h-4 w-4" />
-                )}
-              </button>
-            </motion.div>
-          </AnimatePresence>
+        <div className="flex w-full justify-between font-medium">
+          <div className="flex w-full flex-col text-xs leading-tight sm:text-sm">
+            <TextCursorProximity
+              className="text-left"
+              styles={styles.details}
+              falloff="exponential"
+              radius={70}
+              containerRef={containerRef}
+            >
+              YOGYAKARTA, ID ⟡
+            </TextCursorProximity>
+            <TextCursorProximity
+              className="text-right"
+              styles={styles.details}
+              falloff="exponential"
+              radius={70}
+              containerRef={containerRef}
+            >
+              JL. GEBLAGAN, TAMAN TIRTO ⟶
+            </TextCursorProximity>
+            <TextCursorProximity
+              className="text-left"
+              styles={styles.details}
+              falloff="exponential"
+              radius={70}
+              containerRef={containerRef}
+            >
+              +62 812 3456 7890 ⟨⟩ MARKETING@TREONSTUDIO.COM
+            </TextCursorProximity>
+          </div>
         </div>
       </div>
     </Card>

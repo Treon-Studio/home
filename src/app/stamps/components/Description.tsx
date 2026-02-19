@@ -122,7 +122,7 @@ export default function Description({ className }: { className?: string }) {
               href="/"
               className="focus-dashed flex items-baseline gap-1 px-1 hover:text-stone-800"
             >
-              <span>marijanapav</span>
+              <span>treonstudio</span>
             </Link>
           </li>
           <li aria-hidden="true" className="text-stone-600 group-focus-within/nav:opacity-0">

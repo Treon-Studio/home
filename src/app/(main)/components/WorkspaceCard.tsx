@@ -14,7 +14,7 @@ export default function WorkspaceCard() {
           <div className="flex items-center gap-2">
             <CardTitle variant="mono">
               <LinkBoxLink
-                href="https://www.workspaces.xyz/p/489-marijana-pavlinic"
+                href="https://treonstudio.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="rounded"

@@ -17,13 +17,13 @@ export default function CurrentCard() {
 
   const folderItems = [
     {
-      path: 'buka-studio/www-marijanapav',
+      path: 'treonstudio/home',
       description:
-        "Like any designer's portfolio, this site is a perpetual WIP. I'm often pushing small nitpick commits.",
+        "Our creative house's home — always evolving, always refining every detail.",
     },
-    { path: 'livekit/livekit-site', description: 'Another project description here' },
-    { path: 'marijanapav/playground', description: 'Yet another project description' },
-    { path: 'marijanapav/stamps', description: 'Final project description' },
+    { path: 'treonstudio/trenzo', description: 'Market research platform for e-commerce sellers.' },
+    { path: 'treonstudio/investrack', description: 'Investment communication made seamless.' },
+    { path: 'treonstudio/playground', description: 'Where we experiment with wild ideas.' },
   ];
 
   return (

@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import { StaticImageData } from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -28,6 +29,37 @@ function intersection<T>(a: T[] = [], b: T[] = []): T[] {
 
 function genImageSizes(length: number): string {
   return `(max-width: 1360px) ${Math.round(100 / length)}vw, ${Math.round(1360 / length)}px`;
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const project = projects
+    .filter((p): p is StaticProject => p.type === 'project')
+    .find((p) => p.slug === slug);
+
+  if (!project) return {};
+
+  const title = `${project.title} | TreonStudio — Creative House from Indonesia`;
+  const description = typeof project.description === 'string'
+    ? project.description
+    : `Proyek ${project.title} oleh TreonStudio — creative house dari Jakarta, Indonesia.`;
+
+  return {
+    title,
+    description,
+    keywords: [
+      project.title,
+      ...(project.tags || []),
+      'TreonStudio',
+      'portfolio',
+      'proyek digital Indonesia',
+    ],
+    openGraph: {
+      title,
+      description,
+      type: 'article',
+    },
+  };
 }
 
 export default async function Work({ params }: { params: Promise<{ slug: string }> }) {

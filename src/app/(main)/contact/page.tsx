@@ -16,8 +16,10 @@ const links = [
 const email = 'hello@treonstudio.com';
 
 export const metadata: Metadata = {
-  title: 'Contact | Treon Studio',
-  description: 'Get in touch with Treon Studio for your next digital project. Based in Jakarta, Indonesia.',
+  title: 'Hubungi Kami | TreonStudio — Jasa Web Developer & Design Jakarta',
+  description:
+    'Hubungi TreonStudio untuk konsultasi gratis. Jasa pembuatan website, aplikasi mobile, dan design system di Jakarta, Indonesia. WhatsApp, email, atau social media — kami siap bantu wujudkan ide digitalmu.',
+  keywords: ['kontak TreonStudio', 'hubungi web developer Jakarta', 'konsultasi jasa website', 'hire developer Indonesia'],
 };
 
 export default function Contact() {
@@ -27,7 +29,7 @@ export default function Contact() {
       <ViewLogger pathname="/contact" />
       <main className="flex flex-1 flex-col px-11 py-8">
         <div className="flex flex-1 flex-col items-center justify-center text-text-primary">
-          <h1>Let&apos;s build something great together</h1>
+          <h1>Let&apos;s create something extraordinary</h1>
           <div className="mb-[100px] flex flex-col items-center gap-6 text-center md:mb-8 md:flex-row ">
             <a
               href="mailto:hello@treonstudio.com"

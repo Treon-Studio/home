@@ -5,7 +5,7 @@ import Footer from './components/Footer';
 import './layout.css';
 
 export const metadata: Metadata = {
-  title: 'Treon Studio - Digital Business Solutions',
+  title: 'TreonStudio — Creative House from Indonesia',
   metadataBase:
     process.env.NODE_ENV === 'production' ? new URL('https://treonstudio.com') : undefined,
 };

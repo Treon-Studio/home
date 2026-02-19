@@ -1,231 +1,113 @@
 'use client';
 
-import { ArrowRightIcon } from '@phosphor-icons/react';
-import {
-  motion,
-  useAnimationControls,
-  useMotionTemplate,
-  useMotionValue,
-  useMotionValueEvent,
-  useSpring,
-  useTransform,
-} from 'framer-motion';
-import { ReactLenis, useLenis } from 'lenis/react';
-import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
-import Stamp1 from '~/public/home/stamps/stamp_1.svg';
-import Stamp2 from '~/public/home/stamps/stamp_2.svg';
-import Stamp3 from '~/public/home/stamps/stamp_3.svg';
-import Stamp4 from '~/public/home/stamps/stamp_4.svg';
-import Stamp5 from '~/public/home/stamps/stamp_5.svg';
-import GridBackground from '~/src/components/GridBackground';
-import CardTitle from '~/src/components/ui/CardTitle';
+import GooeySvgFilter from '~/src/components/ui/GooeySvgFilter';
 import useMatchMedia from '~/src/hooks/useMatchMedia';
-import useResizeRef from '~/src/hooks/useResizeRef';
-import { remap } from '~/src/math';
-import { cn } from '~/src/util';
 
+import BlogDrawer, { type BlogData } from './BlogDrawer';
 import Card from './Card';
 
-interface SkewedCardProps {
-  index: number;
-  children: React.ReactNode;
-  count: number;
-  width: number;
-  height: number;
-  activeIndex?: number | null;
-  className?: string;
-  style?: React.CSSProperties;
-  spacing?: number;
-  containerWidth: number;
-  containerHeight: number;
-  onActivate?: (index: number | null) => void;
-}
+const TAB_CONTENT = [
+  {
+    title: 'Engineering',
+    files: ['trenzo-v2-launch.md', 'investrack-redesign.md', 'munaqadh-payment.md', 'radas-toolkit.md'],
+  },
+  {
+    title: 'Design',
+    files: ['trenzo-mvp.md', 'kopod-first-episode.md', 'muslimfy-beta.md', 'design-system-v1.md'],
+  },
+  {
+    title: 'Inside',
+    files: ['treonstudio-founded.md', 'first-client-project.md', 'brand-identity.md', 'team-building.md'],
+  },
+];
 
-export function SkewedCard({
-  index,
-  children,
-  count,
-  width = 200,
-  height = 200,
-  activeIndex,
-  className,
-  style,
-  containerWidth,
-  containerHeight,
-  onActivate,
-}: SkewedCardProps) {
-  const scrollProgress = useMotionValue(0);
-  const animationControls = useAnimationControls();
-
-  const isTouch = useMatchMedia('(pointer: coarse)');
-
-  const cardOffset = index / count;
-  const initialProgress = cardOffset % 1;
-  const initialZIndex = Math.floor(initialProgress * count);
-  const [relativeZIndex, setRelativeZIndex] = useState(initialZIndex);
-  const scrolling = useRef(false);
-  const scale = useMotionValue(1);
-  const springScale = useSpring(scale, {
-    stiffness: 100,
-    damping: 10,
-    mass: 0.5,
-  });
-
-  const loopedProgress = useTransform(scrollProgress, (p) => {
-    const cardOffset = index / count;
-
-    return (p + cardOffset) % 1;
-  });
-
-  useMotionValueEvent(loopedProgress, 'change', (latest) => {
-    const relativeZIndex = Math.floor(latest * count);
-    setRelativeZIndex(relativeZIndex);
-  });
-
-  const x = useTransform(loopedProgress, (p) => remap(p, 0, 1, containerWidth, -width - width / 2));
-
-  const y = useTransform(loopedProgress, (p) =>
-    remap(p, 0, 1, -height, containerHeight + height / 2),
-  );
-
-  const lenis = useLenis((lenis: any) => {
-    if (isTouch) {
-      scrollProgress.set(1 - lenis.progress);
-    } else {
-      scrollProgress.set(lenis.progress);
-    }
-
-    scrolling.current = true;
-    if (lenis.velocity < 0.1) {
-      scrolling.current = false;
-    }
-  });
-
-  const transform = useMotionTemplate`translate(${x}px, ${y}px) skewY(10deg) scale(${springScale})`;
+export default function SkewedStampsCard({ blogs = {} }: { blogs?: Record<string, BlogData> }) {
+  const [activeTab, setActiveTab] = useState(0);
+  const mobile = useMatchMedia('(max-width: 768px)', false);
+  const [isSafari, setIsSafari] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<string | null>(null);
 
   useEffect(() => {
-    if (containerHeight > 0) {
-      lenis?.scrollTo(200, {
-        duration: 5,
-      });
-
-      animationControls.start({
-        opacity: 1,
-        filter: 'blur(0px)',
-        transition: {
-          delay: 0.05 * index,
-          duration: 0.05 * index,
-        },
-      });
-    }
-  }, [containerWidth, containerHeight, index, animationControls, lenis]);
+    setIsSafari(/^((?!chrome|android).)*safari/i.test(navigator.userAgent));
+  }, []);
 
   return (
-    <motion.div
-      className={cn('absolute', className)}
-      animate={animationControls}
-      style={{
-        height,
-        width,
-        top: -height / 2,
-        zIndex: relativeZIndex,
-        transform,
-        opacity: 0,
-        filter: 'blur(2px)',
-        ...style,
-      }}
-      onHoverStart={() => {
-        onActivate?.(index);
-      }}
-      onHoverEnd={() => {
-        onActivate?.(null);
-      }}
-    >
-      {children}
-    </motion.div>
-  );
-}
+    <>
+    <Card className="!p-0 overflow-hidden">
+      <div className="relative flex h-full flex-col p-5 font-sans text-xs sm:text-sm md:text-base">
+        <GooeySvgFilter id="gooey-filter" strength={mobile ? 8 : 15} />
 
-export function Stamps({ width, height }: { width: number; height: number }) {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const numCards = 10;
-
-  const stamps = [Stamp1, Stamp2, Stamp3, Stamp4, Stamp5];
-
-  return (
-    <div className="relative h-full w-full">
-      <ReactLenis
-        className="scrollbar-none max-h-[420px] w-full overflow-hidden rounded-lg"
-        options={{
-          infinite: true,
-          syncTouch: true,
-          syncTouchLerp: 0.2,
-          duration: 2,
-        }}
-      >
-        <div className="h-[1000px] w-full" />
-        <div className="absolute top-0 right-0 mx-auto flex h-full w-full flex-col items-center overflow-hidden rounded-lg">
-          {Array.from({ length: numCards }).map((_, i) => {
-            const Stamp = stamps[i % stamps.length];
-            return (
-              <SkewedCard
-                activeIndex={activeIndex}
-                index={i}
-                count={numCards}
-                key={i}
-                width={150}
-                height={200}
-                containerWidth={width}
-                containerHeight={height}
-                onActivate={setActiveIndex}
-                className="flex items-center justify-center"
-              >
-                <Stamp
-                  className={cn(
-                    '[--background:var(--theme-3)] [--foreground-muted:var(--text-primary)]',
-                    'in-[.theme-dark]:[--background:var(--theme-1)] in-[.theme-dark]:[--foreground-muted:var(--theme-3)] in-[.theme-dark]:[--foreground:var(--theme-3)] in-[.theme-dark]:[--outline:var(--theme-2)]',
-                    'h-auto w-[150px] drop-shadow-sm',
+        <div className="relative w-full flex-1">
+          <div className="absolute inset-0 flex flex-col" style={{ filter: 'url(#gooey-filter)' }}>
+            <div className="flex w-full">
+              {TAB_CONTENT.map((_, index) => (
+                <div key={index} className="relative h-8 flex-1 md:h-10">
+                  {activeTab === index && (
+                    <motion.div
+                      layoutId="active-gooey-tab"
+                      className="absolute inset-0 bg-[#efefef]"
+                      transition={{
+                        type: 'spring',
+                        bounce: 0.0,
+                        duration: isSafari ? 0 : 0.4,
+                      }}
+                    />
                   )}
-                />
-              </SkewedCard>
-            );
-          })}
-        </div>
-      </ReactLenis>
-    </div>
-  );
-}
+                </div>
+              ))}
+            </div>
+            <div className="w-full flex-1 overflow-hidden bg-[#efefef] text-text-secondary">
+              <AnimatePresence mode="popLayout">
+                <motion.div
+                  key={activeTab}
+                  initial={{ opacity: 0, y: 50, filter: 'blur(10px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  exit={{ opacity: 0, y: -50, filter: 'blur(10px)' }}
+                  transition={{ duration: 0.2, ease: 'easeOut' }}
+                  className="p-5 md:p-8"
+                >
+                  <div className="mt-2 space-y-2 sm:mt-4">
+                    <ul>
+                      {TAB_CONTENT[activeTab].files.map((file) => (
+                        <li
+                          key={file}
+                          className="border-b border-text-secondary/20 pt-2 pb-1 text-text-primary cursor-pointer hover:text-theme-1 transition-colors"
+                          onClick={() => {
+                            setSelectedFile(file);
+                            setDrawerOpen(true);
+                          }}
+                        >
+                          {file}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
 
-export default function SkewedStampsCard() {
-  const { ref, dimensions } = useResizeRef<HTMLDivElement>();
-
-  return (
-    <Card id="stamps">
-      <div className="flex flex-col gap-4">
-        <CardTitle variant="mono">
-          <Link
-            href="/stamps"
-            className="group flex w-full items-center justify-between gap-2 rounded-md"
-          >
-            <span>Our Product - Meja</span>
-            <ArrowRightIcon className="inline h-4 w-4" />
-          </Link>
-        </CardTitle>
-        <div
-          className="relative h-full min-h-[240px] w-full overflow-auto rounded-md xl:min-h-[420px]"
-          ref={ref}
-        >
-          <GridBackground className="absolute top-0 left-0 h-full w-full" n={300} />
-          <Stamps width={dimensions.width} height={dimensions.height} />
+          <div className="relative flex w-full">
+            {TAB_CONTENT.map((tab, index) => (
+              <button key={index} onClick={() => setActiveTab(index)} className="h-8 flex-1 md:h-10">
+                <span
+                  className={`flex h-full w-full items-center justify-center ${
+                    activeTab === index ? 'text-text-primary' : 'text-text-secondary'
+                  }`}
+                >
+                  {tab.title}
+                </span>
+              </button>
+            ))}
+          </div>
         </div>
-        <p className="text-text-primary text-sm">
-          Meja is our flagship product designed to streamline your business operations. A modern
-          solution built with cutting-edge technology to help businesses manage their workflow
-          efficiently and scale with confidence.
-        </p>
       </div>
     </Card>
+    <BlogDrawer open={drawerOpen} onOpenChange={setDrawerOpen} fileName={selectedFile} blogs={blogs} />
+    </>
   );
 }
