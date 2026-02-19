@@ -75,11 +75,76 @@ function IconCoil() {
   );
 }
 
+function IconDocument() {
+  return (
+    <svg className="block h-full w-full" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+      <polyline points="14 2 14 8 20 8" />
+      <line x1="16" y1="13" x2="8" y2="13" />
+      <line x1="16" y1="17" x2="8" y2="17" />
+      <line x1="10" y1="9" x2="8" y2="9" />
+    </svg>
+  );
+}
+
+function IconBuilding() {
+  return (
+    <svg className="block h-full w-full" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <rect x="3" y="3" width="18" height="18" rx="1" />
+      <path d="M3 9h18M3 15h18M9 3v18M15 3v18" />
+    </svg>
+  );
+}
+
+function IconTerminal() {
+  return (
+    <svg className="block h-full w-full" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <polyline points="4 17 10 11 4 5" />
+      <line x1="12" y1="19" x2="20" y2="19" />
+    </svg>
+  );
+}
+
+function IconHome() {
+  return (
+    <svg className="block h-full w-full" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z" />
+      <path d="M9 21V12h6v9" />
+    </svg>
+  );
+}
+
+function IconChat() {
+  return (
+    <svg className="block h-full w-full" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
+    </svg>
+  );
+}
+
+function IconPalette() {
+  return (
+    <svg className="block h-full w-full" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <circle cx="13.5" cy="6.5" r="1" fill="currentColor" />
+      <circle cx="17.5" cy="10.5" r="1" fill="currentColor" />
+      <circle cx="8.5" cy="7.5" r="1" fill="currentColor" />
+      <circle cx="6.5" cy="12.5" r="1" fill="currentColor" />
+      <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 011.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" />
+    </svg>
+  );
+}
+
 const categoryIcons: Record<string, React.ReactNode> = {
-  link:   <IconLink />,
-  people: <IconPeople />,
-  ribbon: <IconRibbon />,
-  coil:   <IconCoil />,
+  link:     <IconLink />,
+  people:   <IconPeople />,
+  ribbon:   <IconRibbon />,
+  coil:     <IconCoil />,
+  building: <IconBuilding />,
+  terminal: <IconTerminal />,
+  home:     <IconHome />,
+  chat:     <IconChat />,
+  palette:  <IconPalette />,
+  document: <IconDocument />,
 };
 
 function CategoryBadge({ iconName, accentColor }: { iconName: string; accentColor: string }) {
@@ -204,7 +269,7 @@ function BgGrassBottom({ color }: { color: string }) {
 interface HLCardProps {
   color: string;
   patternColor: string;
-  bgPattern: 'circles-corner' | 'grass-left' | 'circles-top' | 'grass-bottom';
+  bgPattern: 'circles-corner' | 'grass-left' | 'circles-top' | 'grass-bottom' | 'dots-scattered';
   iconName: string;
   label: string;
   title: string;
@@ -213,11 +278,31 @@ interface HLCardProps {
   completion: number;
 }
 
+function BgDotsScattered({ color }: { color: string }) {
+  // Grid of small scattered dots across the card
+  const dots: [number, number, number][] = [
+    [40,30,3],[90,20,4],[150,50,3],[200,25,5],[260,40,3],[290,80,4],
+    [20,90,4],[70,110,3],[130,85,5],[180,110,4],[240,90,3],[300,60,4],
+    [50,160,3],[110,140,4],[170,165,3],[230,150,5],[280,170,3],
+    [30,220,4],[85,200,3],[145,230,4],[205,210,3],[260,235,4],[295,200,3],
+    [15,275,3],[70,260,5],[135,285,3],[190,270,4],[245,290,3],[285,265,4],
+    [55,320,4],[120,310,3],[175,325,4],[235,315,3],[270,310,5],
+  ];
+  return (
+    <svg className="pointer-events-none absolute inset-0 h-auto w-full" viewBox="0 0 316 350" aria-hidden>
+      {dots.map(([cx, cy, r], i) => (
+        <circle key={i} cx={cx} cy={cy} r={r} fill={color} />
+      ))}
+    </svg>
+  );
+}
+
 const bgComponents = {
   'circles-corner': BgCirclesCorner,
   'grass-left':     BgGrassLeft,
   'circles-top':    BgCirclesTop,
   'grass-bottom':   BgGrassBottom,
+  'dots-scattered': BgDotsScattered,
 };
 
 function HighlightCard({ color, patternColor, bgPattern, iconName, label, title, description, rating, completion }: HLCardProps) {
@@ -254,16 +339,15 @@ function HighlightCard({ color, patternColor, bgPattern, iconName, label, title,
 }
 
 // ── Slide configs ─────────────────────────────────────────────────────────────
-
 const slideConfigs: HLCardProps[] = [
   {
     color: 'hsl(4, 56%, 48%)',
     patternColor: 'hsl(4, 56%, 43%)',
     bgPattern: 'circles-corner',
-    iconName: 'link',
-    label: 'Financial',
+    iconName: 'building',
+    label: 'Construction SaaS',
     title: 'Investrack',
-    description: 'Track your investment portfolio with smart analytics and real-time market insights.',
+    description: 'A whitelabel-ready SaaS platform for managing construction projects, teams, and timelines end-to-end.',
     rating: 4.6,
     completion: 0.45,
   },
@@ -271,10 +355,10 @@ const slideConfigs: HLCardProps[] = [
     color: 'hsl(225, 58%, 53%)',
     patternColor: 'hsl(225, 58%, 48%)',
     bgPattern: 'grass-left',
-    iconName: 'people',
-    label: 'Software',
-    title: 'Meja',
-    description: 'Seamlessly collaborate with your team in unified real-time workspaces.',
+    iconName: 'document',
+    label: 'Document Management',
+    title: 'DokuKita',
+    description: 'A centralized document management platform to store, organize, and collaborate on team files with ease.',
     rating: 4.8,
     completion: 0.72,
   },
@@ -282,21 +366,32 @@ const slideConfigs: HLCardProps[] = [
     color: 'hsl(262, 44%, 53%)',
     patternColor: 'hsl(262, 44%, 48%)',
     bgPattern: 'circles-top',
-    iconName: 'ribbon',
-    label: 'SaaS Rent',
+    iconName: 'home',
+    label: 'Rental SaaS',
     title: 'Warum',
-    description: 'Automate repetitive tasks with intelligent triggers and smart scheduling.',
+    description: 'A rental property management SaaS built specifically for Indonesian landlords to manage tenants and payments.',
     rating: 4.3,
     completion: 0.58,
   },
   {
+    color: 'hsl(200, 58%, 48%)',
+    patternColor: 'hsl(200, 58%, 42%)',
+    bgPattern: 'grass-bottom',
+    iconName: 'chat',
+    label: 'CRM Tools',
+    title: 'Meja',
+    description: 'A modern CRM tool to handle customer conversations, support tickets, and sales analytics in one place.',
+    rating: 4.7,
+    completion: 0.63,
+  },
+  {
     color: 'hsl(320, 60%, 58%)',
     patternColor: 'hsl(320, 60%, 52%)',
-    bgPattern: 'grass-bottom',
-    iconName: 'coil',
+    bgPattern: 'dots-scattered',
+    iconName: 'palette',
     label: 'Design System',
     title: 'Bungas',
-    description: 'Grow together through shared knowledge and meaningful community connections.',
+    description: 'A plug-and-play UI Kit for web and mobile built on design tokens for consistent, scalable interfaces.',
     rating: 4.5,
     completion: 0.35,
   },

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
-import PortraitSrc from '~/public/home/me.jpg';
+import PortraitSrc from '~/public/home/us.jpeg';
 import {
   ArrowRightIcon,
   GithubIcon,
