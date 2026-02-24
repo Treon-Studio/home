@@ -98,6 +98,7 @@ interface BoxCarouselProps extends React.HTMLProps<HTMLDivElement> {
   dragSpring?: SpringConfig;
   autoPlay?: boolean;
   autoPlayInterval?: number;
+  pauseOnHover?: boolean;
   onIndexChange?: (index: number) => void;
   enableDrag?: boolean;
   dragSensitivity?: number;
@@ -118,6 +119,7 @@ const BoxCarousel = forwardRef<BoxCarouselRef, BoxCarouselProps>(
       dragSpring = { stiffness: 200, damping: 30 },
       autoPlay = false,
       autoPlayInterval = 3000,
+      pauseOnHover = false,
       onIndexChange,
       enableDrag = true,
       dragSensitivity = 0.5,
@@ -127,6 +129,7 @@ const BoxCarousel = forwardRef<BoxCarouselRef, BoxCarouselProps>(
   ) => {
     const [currentItemIndex, setCurrentItemIndex] = useState(0);
     const [currentFrontFaceIndex, setCurrentFrontFaceIndex] = useState(1);
+    const isHovered = useRef(false);
 
     const prefersReducedMotion = useReducedMotion();
     const _transition = prefersReducedMotion ? { duration: 0 } : transition;
@@ -487,10 +490,13 @@ const BoxCarousel = forwardRef<BoxCarouselRef, BoxCarouselProps>(
 
     useEffect(() => {
       if (autoPlay && items.length > 0) {
-        const interval = setInterval(next, autoPlayInterval);
+        const interval = setInterval(() => {
+          if (pauseOnHover && isHovered.current) return;
+          next();
+        }, autoPlayInterval);
         return () => clearInterval(interval);
       }
-    }, [autoPlay, items.length, next, autoPlayInterval]);
+    }, [autoPlay, items.length, next, autoPlayInterval, pauseOnHover]);
 
     const handleKeyDown = useCallback(
       (e: React.KeyboardEvent) => {
@@ -533,6 +539,8 @@ const BoxCarousel = forwardRef<BoxCarouselRef, BoxCarouselProps>(
         aria-label={`3D carousel with ${items.length} items`}
         aria-live="polite"
         aria-atomic="true"
+        onMouseEnter={pauseOnHover ? () => { isHovered.current = true; } : undefined}
+        onMouseLeave={pauseOnHover ? () => { isHovered.current = false; } : undefined}
         onMouseDown={handleDragStart}
         onTouchStart={handleDragStart}
         {...props}

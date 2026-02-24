@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 
 import Footer from './components/Footer';
+import PreloaderWrapper from './PreloaderWrapper';
 
 import './layout.css';
 
@@ -12,11 +13,13 @@ export const metadata: Metadata = {
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="main bg-main-background">
-      <div className="layout-container m-auto flex min-h-screen max-w-(--breakpoint-2xl) flex-col">
-        {children}
-        <Footer />
+    <PreloaderWrapper>
+      <div className="main bg-main-background">
+        <div className="layout-container m-auto flex min-h-screen max-w-(--breakpoint-2xl) flex-col">
+          {children}
+          <Footer />
+        </div>
       </div>
-    </div>
+    </PreloaderWrapper>
   );
 }

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import CardTitle from '~/src/components/ui/CardTitle';
 import BoxCarousel, { type BoxCarouselRef, type CarouselItem } from '~/src/components/ui/BoxCarousel';
+import { Pointer } from '~/src/components/ui/Pointer';
 import { cn } from '~/src/util';
 
 import Card from './Card';
@@ -428,7 +429,10 @@ export default function PhotosCard() {
   }, []);
 
   return (
-    <Card className="flex flex-col gap-5">
+    <Card className="relative flex flex-col gap-5">
+      <Pointer>
+        <div className="text-3xl">👀</div>
+      </Pointer>
       <div className="flex flex-col items-start justify-between gap-2 xxs:flex-row xxs:items-center">
         <CardTitle variant="mono">Our Products</CardTitle>
         <div className="flex items-center justify-center gap-[6px]">
@@ -456,6 +460,7 @@ export default function PhotosCard() {
             direction="top"
             autoPlay
             autoPlayInterval={3000}
+            pauseOnHover
             onIndexChange={setCurrentIndex}
             enableDrag
             perspective={1000}

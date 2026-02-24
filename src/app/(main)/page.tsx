@@ -110,7 +110,7 @@ export default async function Home() {
       <div className="glow pointer-events-none fixed h-[400px] w-[400px] rounded-full blur-3xl" />
       <div className="flex flex-col px-5 py-5 md:py-12">
         <main className="pb-12">
-          <Heading className="mb-20" />
+          <Heading className="mb-[1.6rem] md:mb-20" />
           <div className="home-cards">
             {getCards({ sketchbookCard: true }).map(({ gridArea, Component }, i) => (
               <div key={i} style={{ gridArea }}>

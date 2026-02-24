@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSelectedLayoutSegment } from 'next/navigation';
 
 import useScroll from '~/src/hooks/useScroll';
@@ -11,40 +12,56 @@ import { ArrowRightIcon } from '~/src/components/icons';
 import { cn } from '~/src/util';
 
 const links = {
-  '/work': { label: 'Works', width: 5.5 },
-  '/': { label: 'About', width: 4.55 },
-  '/shop': { label: 'Resources', width: 6.2 },
-  '/contact': { label: 'Contact', width: 5.4 },
+  '/work': { label: 'Works' },
+  '/': { label: 'About' },
+  '/shop': { label: 'Resources' },
+  '/contact': { label: 'Contact' },
 };
 
 export default function Navabar() {
   const pathSegment = `/${useSelectedLayoutSegment() || ''}` as keyof typeof links;
-  const activeIndex = Object.keys(links).findIndex((path) => pathSegment === path);
   const { y } = useScroll();
+  const navRef = useRef<HTMLElement>(null);
+  const linkRefs = useRef<Map<string, HTMLAnchorElement>>(new Map());
+  const [highlight, setHighlight] = useState({ left: 0, width: 0 });
 
-  const highlightOffset = `${
-    0.1875 +
-    Object.values(links)
-      .slice(0, activeIndex)
-      .reduce((acc, curr) => acc + curr.width + 0.5, 0)
-  }rem`;
+  const updateHighlight = useCallback(() => {
+    const nav = navRef.current;
+    const activeLink = linkRefs.current.get(pathSegment);
+    if (nav && activeLink) {
+      const navRect = nav.getBoundingClientRect();
+      const linkRect = activeLink.getBoundingClientRect();
+      setHighlight({
+        left: linkRect.left - navRect.left,
+        width: linkRect.width,
+      });
+    }
+  }, [pathSegment]);
+
+  useEffect(() => {
+    updateHighlight();
+    window.addEventListener('resize', updateHighlight);
+    return () => window.removeEventListener('resize', updateHighlight);
+  }, [updateHighlight]);
 
   return (
     <>
-      <nav className="border-panel-border bg-panel-background shadow-card relative z-1 flex items-center gap-2 rounded-full border p-1">
-        {/* note: motion.div layoutId loses position after page scrolls */}
+      <nav ref={navRef} className="border-panel-border bg-panel-background shadow-card relative z-1 flex items-center rounded-full border p-1">
         <div
           className="bg-theme-3 absolute h-[90%] rounded-full transition-all duration-300 ease-out"
           style={{
-            width: `${links[pathSegment]?.width}rem`,
-            left: highlightOffset,
+            width: `${highlight.width}px`,
+            left: `${highlight.left}px`,
           }}
         />
-        {Object.entries(links).map(([path, l], i) => (
+        {Object.entries(links).map(([path, l]) => (
           <Link
             href={path}
             key={l.label}
-            className="text-text-primary z-1 rounded-full px-4 py-1 text-sm"
+            ref={(el) => {
+              if (el) linkRefs.current.set(path, el);
+            }}
+            className="text-text-primary z-1 rounded-full px-4 py-1.5 text-sm text-center"
           >
             {l.label}
           </Link>

@@ -7,7 +7,7 @@ export default function BukaCard() {
     <Card className="relative flex h-full flex-col !bg-white !p-0 overflow-hidden">
       <div className="flex-1">
         {/* Speech bubble */}
-        <div className="relative rounded-b-2xl bg-[#F5C6D0] p-5">
+        <div className="relative rounded-b-2xl bg-[#D8F3DC] p-5">
           <p className="mb-3 font-libertinus-serif text-xs italic text-[#3D1220]/60">
             Success Story
           </p>
@@ -27,7 +27,7 @@ export default function BukaCard() {
           >
             <path
               d="M0,0 L0,14 Q0,21 7,21 Q20,18 40,0 Z"
-              fill="#F5C6D0"
+              fill="#D8F3DC"
             />
           </svg>
         </div>

@@ -28,6 +28,7 @@ const libertinusSerif = Libertinus_Serif({
   subsets: ['latin'],
   weight: ['400'],
   variable: '--font-libertinus-serif',
+  adjustFontFallback: false,
 });
 
 export const metadata: Metadata = {
