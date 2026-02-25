@@ -75,10 +75,19 @@ export default function SkewedStampsCard({ blogs = {} }: { blogs?: Record<string
                       {TAB_CONTENT[activeTab].files.map((file) => (
                         <li
                           key={file}
+                          role="button"
+                          tabIndex={0}
                           className="border-b border-text-secondary/20 pt-2 pb-1 text-text-primary cursor-pointer hover:text-theme-1 transition-colors"
                           onClick={() => {
                             setSelectedFile(file);
                             setDrawerOpen(true);
+                          }}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                              e.preventDefault();
+                              setSelectedFile(file);
+                              setDrawerOpen(true);
+                            }
                           }}
                         >
                           {file}

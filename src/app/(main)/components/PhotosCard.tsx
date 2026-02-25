@@ -277,6 +277,10 @@ interface HLCardProps {
   description: string;
   rating: number;
   completion: number;
+  logoText?: string;
+  logoIcon?: string;
+  contentColor?: string;
+  iconColor?: string;
 }
 
 function BgDotsScattered({ color }: { color: string }) {
@@ -306,8 +310,12 @@ const bgComponents = {
   'dots-scattered': BgDotsScattered,
 };
 
-function HighlightCard({ color, patternColor, bgPattern, iconName, label, title, description, rating, completion }: HLCardProps) {
+function HighlightCard({ color, patternColor, bgPattern, iconName, label, title, description, rating, completion, logoText, logoIcon, contentColor, iconColor }: HLCardProps) {
   const BgComponent = bgComponents[bgPattern];
+  const isDark = !!contentColor;
+  const textColor = contentColor || '#ffffff';
+  // brightness(0.18) on white SVGs ≈ #2e2e2e, close enough for dark logos
+  const logoFilter = isDark ? 'brightness(0.18)' : undefined;
 
   return (
     <div
@@ -318,22 +326,54 @@ function HighlightCard({ color, patternColor, bgPattern, iconName, label, title,
 
       {/* Header */}
       <div className="relative z-10 flex items-start justify-between gap-3">
-        <span className="text-base text-white">{label}</span>
-        <CategoryBadge iconName={iconName} accentColor={color} />
+        <span className="text-base" style={{ color: textColor }}>{label}</span>
+        {logoIcon && iconColor ? (
+          <div
+            className="h-12 w-12 shrink-0"
+            style={{
+              backgroundColor: iconColor,
+              maskImage: `url(${logoIcon})`,
+              maskSize: 'contain',
+              maskRepeat: 'no-repeat',
+              WebkitMaskImage: `url(${logoIcon})`,
+              WebkitMaskSize: 'contain',
+              WebkitMaskRepeat: 'no-repeat',
+            }}
+          />
+        ) : logoIcon ? (
+          <img src={logoIcon} alt={label} className="h-12 w-12 shrink-0" style={{ filter: logoFilter }} />
+        ) : (
+          <CategoryBadge iconName={iconName} accentColor={color} />
+        )}
       </div>
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col text-white">
-        <h2 className="mb-1 font-libertinus text-4xl font-normal leading-tight [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:1] overflow-hidden">
-          {title}
-        </h2>
+      <div className="relative z-10 flex flex-col" style={{ color: textColor }}>
+        {logoText && iconColor ? (
+          <div
+            className="mb-1 h-10 w-full"
+            style={{
+              backgroundColor: iconColor,
+              maskImage: `url(${logoText})`,
+              maskSize: 'contain',
+              maskRepeat: 'no-repeat',
+              maskPosition: 'left center',
+              WebkitMaskImage: `url(${logoText})`,
+              WebkitMaskSize: 'contain',
+              WebkitMaskRepeat: 'no-repeat',
+              WebkitMaskPosition: 'left center',
+            }}
+          />
+        ) : logoText ? (
+          <img src={logoText} alt={title} className="mb-1 h-10 w-auto self-start" style={{ filter: logoFilter }} />
+        ) : (
+          <h2 className="mb-1 font-libertinus text-4xl font-normal leading-tight [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:1] overflow-hidden">
+            {title}
+          </h2>
+        )}
         <p className="mb-5 text-sm leading-snug opacity-90 [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2] overflow-hidden">
           {description}
         </p>
-        <div className="flex items-center gap-3 text-sm font-normal">
-          <StarIcon />
-          <CheckCircleIcon />
-        </div>
       </div>
     </div>
   );
@@ -342,8 +382,8 @@ function HighlightCard({ color, patternColor, bgPattern, iconName, label, title,
 // ── Slide configs ─────────────────────────────────────────────────────────────
 const slideConfigs: HLCardProps[] = [
   {
-    color: 'hsl(4, 56%, 48%)',
-    patternColor: 'hsl(4, 56%, 43%)',
+    color: '#00569b',
+    patternColor: '#004a86',
     bgPattern: 'circles-corner',
     iconName: 'building',
     label: 'Construction SaaS',
@@ -353,8 +393,8 @@ const slideConfigs: HLCardProps[] = [
     completion: 0.45,
   },
   {
-    color: 'hsl(225, 58%, 53%)',
-    patternColor: 'hsl(225, 58%, 48%)',
+    color: '#39A47B',
+    patternColor: '#2F8D6A',
     bgPattern: 'grass-left',
     iconName: 'document',
     label: 'Document Management',
@@ -362,6 +402,8 @@ const slideConfigs: HLCardProps[] = [
     description: 'A centralized document management platform to store, organize, and collaborate on team files with ease.',
     rating: 4.8,
     completion: 0.72,
+    logoText: '/home/products/Logo-Text-Dokukita.svg',
+    logoIcon: '/home/products/Logo-Icon-Dokukita.svg',
   },
   {
     color: 'hsl(262, 44%, 53%)',
@@ -369,25 +411,29 @@ const slideConfigs: HLCardProps[] = [
     bgPattern: 'circles-top',
     iconName: 'home',
     label: 'Rental SaaS',
-    title: 'Warum',
+    title: 'Hunivo',
     description: 'A rental property management SaaS built specifically for Indonesian landlords to manage tenants and payments.',
     rating: 4.3,
     completion: 0.58,
+    logoText: '/home/products/Logo-Text-Hunivo.svg',
+    logoIcon: '/home/products/Logo-Icon-Hunivo.svg',
   },
   {
-    color: 'hsl(200, 58%, 48%)',
-    patternColor: 'hsl(200, 58%, 42%)',
+    color: '#078ade',
+    patternColor: '#0678c2',
     bgPattern: 'grass-bottom',
     iconName: 'chat',
     label: 'CRM Tools',
-    title: 'Meja',
+    title: 'Laju',
     description: 'A modern CRM tool to handle customer conversations, support tickets, and sales analytics in one place.',
     rating: 4.7,
     completion: 0.63,
+    logoText: '/home/products/Logo-Text-Laju.svg',
+    logoIcon: '/home/products/Logo-Icon-Laju.svg',
   },
   {
-    color: 'hsl(320, 60%, 58%)',
-    patternColor: 'hsl(320, 60%, 52%)',
+    color: '#f7f7f7',
+    patternColor: '#e8e8e8',
     bgPattern: 'dots-scattered',
     iconName: 'palette',
     label: 'Design System',
@@ -395,6 +441,23 @@ const slideConfigs: HLCardProps[] = [
     description: 'A plug-and-play UI Kit for web and mobile built on design tokens for consistent, scalable interfaces.',
     rating: 4.5,
     completion: 0.35,
+    logoText: '/home/products/Logo-Text-Bungas.svg',
+    logoIcon: '/home/products/Logo-Icon-Bungas.svg',
+    contentColor: '#2e2e2c',
+    iconColor: '#2e2e2c',
+  },
+  {
+    color: 'hsl(145, 40%, 42%)',
+    patternColor: 'hsl(145, 40%, 36%)',
+    bgPattern: 'circles-corner',
+    iconName: 'people',
+    label: 'Islamic Lifestyle',
+    title: 'Muslimfy',
+    description: 'An all-in-one Islamic lifestyle app with prayer times, Quran reader, and daily reminders for your spiritual journey.',
+    rating: 4.4,
+    completion: 0.4,
+    logoText: '/home/products/Logo-Text-Muslimfy.svg',
+    logoIcon: '/home/products/Logo-Icon-Muslimfy.svg',
   },
 ];
 

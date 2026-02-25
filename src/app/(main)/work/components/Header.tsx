@@ -6,7 +6,8 @@ import { useSearchParams } from 'next/navigation';
 import Button from '~/src/components/ui/Button';
 
 import MainHeader from '../../components/Header';
-import { filters } from '../constants';
+
+const filters = ['all', 'products', 'community', 'services'] as const;
 
 function getFilterLabel(tag: string): string {
   return tag

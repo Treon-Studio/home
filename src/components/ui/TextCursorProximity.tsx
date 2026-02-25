@@ -1,7 +1,7 @@
 'use client';
 
 import React, { CSSProperties, ElementType, forwardRef, useRef, useMemo } from 'react';
-import { motion, useAnimationFrame, useMotionValue, useTransform } from 'framer-motion';
+import { motion, MotionValue, useAnimationFrame, useMotionValue, useTransform } from 'framer-motion';
 
 import { useMousePositionRef } from '~/src/hooks/useMousePositionRef';
 import { cn } from '~/src/util';
@@ -26,6 +26,62 @@ interface TextProps extends React.HTMLAttributes<HTMLSpanElement> {
   falloff?: 'linear' | 'exponential' | 'gaussian';
 }
 
+const MAX_CHARS = 200;
+
+function useMotionValueArray(length: number): MotionValue<number>[] {
+  const values: MotionValue<number>[] = [];
+  for (let i = 0; i < MAX_CHARS; i++) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    values.push(useMotionValue(0));
+  }
+  return values.slice(0, length);
+}
+
+function useTransformedStyles(
+  proximity: MotionValue<number>,
+  styles: TextProps['styles'],
+): Record<string, MotionValue> {
+  const entries = Object.entries(styles);
+  const transformed: Record<string, MotionValue> = {};
+
+  for (let i = 0; i < entries.length; i++) {
+    const [key, value] = entries[i];
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    transformed[key] = useTransform(proximity, [0, 1], [value!.from, value!.to]);
+  }
+
+  return transformed;
+}
+
+function AnimatedLetter({
+  letter,
+  index,
+  proximity,
+  styles,
+  letterRefs,
+}: {
+  letter: string;
+  index: number;
+  proximity: MotionValue<number>;
+  styles: TextProps['styles'];
+  letterRefs: React.MutableRefObject<(HTMLSpanElement | null)[]>;
+}) {
+  const transformedStyles = useTransformedStyles(proximity, styles);
+
+  return (
+    <motion.span
+      ref={(el: HTMLSpanElement | null) => {
+        letterRefs.current[index] = el;
+      }}
+      className="inline-block"
+      aria-hidden="true"
+      style={transformedStyles}
+    >
+      {letter}
+    </motion.span>
+  );
+}
+
 const TextCursorProximity = forwardRef<HTMLSpanElement, TextProps>(
   ({ children, as, styles, containerRef, radius = 50, falloff = 'linear', className, ...props }, ref) => {
     const MotionComponent = useMemo(() => motion.create(as ?? 'span'), [as]);
@@ -33,9 +89,9 @@ const TextCursorProximity = forwardRef<HTMLSpanElement, TextProps>(
     const mousePositionRef = useMousePositionRef(containerRef);
 
     const text = React.Children.toArray(children).join('');
+    const nonSpaceCount = text.replace(/\s/g, '').length;
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const letterProximities = useRef(Array(text.replace(/\s/g, '').length).fill(0).map(() => useMotionValue(0)));
+    const letterProximities = useMotionValueArray(nonSpaceCount);
 
     const calculateDistance = (x1: number, y1: number, x2: number, y2: number): number => {
       return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
@@ -60,7 +116,7 @@ const TextCursorProximity = forwardRef<HTMLSpanElement, TextProps>(
       const containerRect = containerRef.current.getBoundingClientRect();
 
       letterRefs.current.forEach((letterRef, index) => {
-        if (!letterRef) return;
+        if (!letterRef || !letterProximities[index]) return;
 
         const rect = letterRef.getBoundingClientRect();
         const letterCenterX = rect.left + rect.width / 2 - containerRect.left;
@@ -74,7 +130,7 @@ const TextCursorProximity = forwardRef<HTMLSpanElement, TextProps>(
         );
 
         const proximity = calculateFalloff(distance);
-        letterProximities.current[index].set(proximity);
+        letterProximities[index].set(proximity);
       });
     });
 
@@ -87,29 +143,19 @@ const TextCursorProximity = forwardRef<HTMLSpanElement, TextProps>(
           <span key={wordIndex} className="inline-block" aria-hidden={true}>
             {word.split('').map((letter: string) => {
               const currentLetterIndex = letterIndex++;
-              const proximity = letterProximities.current[currentLetterIndex];
+              const proximity = letterProximities[currentLetterIndex];
 
-              const transformedStyles = Object.entries(styles).reduce(
-                (acc, [key, value]) => {
-                  // eslint-disable-next-line react-hooks/rules-of-hooks
-                  acc[key] = useTransform(proximity, [0, 1], [value.from, value.to]);
-                  return acc;
-                },
-                {} as Record<string, unknown>,
-              );
+              if (!proximity) return <span key={currentLetterIndex}>{letter}</span>;
 
               return (
-                <motion.span
+                <AnimatedLetter
                   key={currentLetterIndex}
-                  ref={(el: HTMLSpanElement | null) => {
-                    letterRefs.current[currentLetterIndex] = el;
-                  }}
-                  className="inline-block"
-                  aria-hidden="true"
-                  style={transformedStyles}
-                >
-                  {letter}
-                </motion.span>
+                  letter={letter}
+                  index={currentLetterIndex}
+                  proximity={proximity}
+                  styles={styles}
+                  letterRefs={letterRefs}
+                />
               );
             })}
             {wordIndex < words.length - 1 && <span className="inline-block">&nbsp;</span>}

@@ -16,6 +16,7 @@ import v60 from '~/public/stickers/v60.svg';
 import Zet from '~/public/stickers/Zet.svg';
 import Button from '~/src/components/ui/Button';
 import useMatchMedia from '~/src/hooks/useMatchMedia';
+import { lerp, randInt } from '~/src/math';
 import { cn } from '~/src/util';
 
 const stickers = [
@@ -31,18 +32,6 @@ const stickers = [
   Stamp2,
   LoremIpsum,
 ];
-
-function lerp(a: number, b: number, t: number) {
-  return a + (b - a) * t;
-}
-
-function clamp(min: number, max: number, value: number) {
-  return Math.min(Math.max(value, min), max);
-}
-
-function randInt(min: number, max: number) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
 
 export default function DraggableStickers({
   rotationSeed,

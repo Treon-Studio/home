@@ -16,10 +16,20 @@ export default function useScreenSize() {
   const [width, setWidth] = useState(0);
 
   useEffect(() => {
+    let timeoutId: ReturnType<typeof setTimeout>;
     const update = () => setWidth(window.innerWidth);
     update();
-    window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
+
+    const debouncedUpdate = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(update, 150);
+    };
+
+    window.addEventListener('resize', debouncedUpdate);
+    return () => {
+      window.removeEventListener('resize', debouncedUpdate);
+      clearTimeout(timeoutId);
+    };
   }, []);
 
   return {

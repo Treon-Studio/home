@@ -39,13 +39,21 @@ export default function useScroll(root?: HTMLElement): ScrollState {
 
   useEffect(() => {
     const target = root || window;
+    let rafId = 0;
+    let ticking = false;
 
     const updateScroll = () => {
-      setScroll(getScrollValues(target!));
+      if (!ticking) {
+        ticking = true;
+        rafId = requestAnimationFrame(() => {
+          setScroll(getScrollValues(target!));
+          ticking = false;
+        });
+      }
     };
 
     if (target) {
-      updateScroll();
+      setScroll(getScrollValues(target));
       target.addEventListener('scroll', updateScroll, listenerOptions);
     }
 
@@ -53,6 +61,7 @@ export default function useScroll(root?: HTMLElement): ScrollState {
       if (target) {
         target.removeEventListener('scroll', updateScroll);
       }
+      cancelAnimationFrame(rafId);
     };
   }, [root]);
 

@@ -18,7 +18,7 @@ const links = {
   '/contact': { label: 'Contact' },
 };
 
-export default function Navabar() {
+export default function Navbar() {
   const pathSegment = `/${useSelectedLayoutSegment() || ''}` as keyof typeof links;
   const { y } = useScroll();
   const navRef = useRef<HTMLElement>(null);

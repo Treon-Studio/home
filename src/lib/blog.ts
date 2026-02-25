@@ -1,6 +1,9 @@
-import fs from 'fs';
+import fs from 'fs/promises';
+import fsSync from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { JSDOM } from 'jsdom';
+import DOMPurify from 'dompurify';
 import { remark } from 'remark';
 import html from 'remark-html';
 
@@ -14,21 +17,24 @@ export type BlogPost = {
   contentHtml: string;
 };
 
+const window = new JSDOM('').window;
+const purify = DOMPurify(window as unknown as Parameters<typeof DOMPurify>[0]);
+
 export function getAllBlogSlugs(): string[] {
-  const files = fs.readdirSync(blogsDirectory);
+  const files = fsSync.readdirSync(blogsDirectory);
   return files.filter((f) => f.endsWith('.md')).map((f) => f.replace(/\.md$/, ''));
 }
 
 export async function getBlogBySlug(slug: string): Promise<BlogPost | null> {
   const filePath = path.join(blogsDirectory, `${slug}.md`);
 
-  if (!fs.existsSync(filePath)) return null;
+  if (!fsSync.existsSync(filePath)) return null;
 
-  const fileContents = fs.readFileSync(filePath, 'utf8');
+  const fileContents = await fs.readFile(filePath, 'utf8');
   const { data, content } = matter(fileContents);
 
   const processedContent = await remark().use(html).process(content);
-  const contentHtml = processedContent.toString();
+  const contentHtml = purify.sanitize(processedContent.toString());
 
   return {
     slug,

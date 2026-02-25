@@ -1,8 +1,6 @@
 import { Metadata } from 'next';
-import { StaticImageData } from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ReactNode } from 'react';
 
 import DynamicVHVarsSetter from '~/src/components/DynamicVHVarsSetter';
 import { LinkIcon } from '~/src/components/icons';
@@ -11,10 +9,9 @@ import Heading from '~/src/components/ui/Heading';
 import Image from '~/src/components/ui/Image';
 import Tag from '~/src/components/ui/Tag';
 import ViewLogger from '~/src/components/ViewCounter';
+import { getAllWorks, getAllWorkSlugs, getWorkBySlug } from '~/src/lib/works';
 
 import Divider from '../components/Divider';
-import { projects, StaticProject } from '../constants';
-import Gallery, { GalleryTrigger } from './components/Gallery';
 import PaginationCard from './components/PaginationCard';
 
 function hostname(url: string): string {
@@ -23,33 +20,30 @@ function hostname(url: string): string {
 
 function intersection<T>(a: T[] = [], b: T[] = []): T[] {
   const s1 = new Set(b);
-
   return a.filter((x) => s1.has(x));
 }
 
-function genImageSizes(length: number): string {
-  return `(max-width: 1360px) ${Math.round(100 / length)}vw, ${Math.round(1360 / length)}px`;
+export async function generateStaticParams() {
+  const slugs = getAllWorkSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const project = projects
-    .filter((p): p is StaticProject => p.type === 'project')
-    .find((p) => p.slug === slug);
+  const project = await getWorkBySlug(slug);
 
   if (!project) return {};
 
   const title = `${project.title} | TreonStudio — Creative House from Indonesia`;
-  const description = typeof project.description === 'string'
-    ? project.description
-    : `Proyek ${project.title} oleh TreonStudio — creative house dari Jakarta, Indonesia.`;
+  const description = project.description
+    || `Proyek ${project.title} oleh TreonStudio — creative house dari Jakarta, Indonesia.`;
 
   return {
     title,
     description,
     keywords: [
       project.title,
-      ...(project.tags || []),
+      ...project.tags,
       'TreonStudio',
       'portfolio',
       'proyek digital Indonesia',
@@ -65,37 +59,35 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function Work({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
 
-  const project = projects
-    .filter((p) => p.type === 'project')
-    .filter((p) => process.env.NODE_ENV === 'development' || !p.hidden)
-    .find((p) => 'slug' in p && p.slug === slug) as StaticProject;
+  const project = await getWorkBySlug(slug);
 
-  const associatedProjects = projects.filter(
-    (p) => p.type === 'project' && !p.hidden && intersection(p.tags, project.tags).length > 0,
-  ) as StaticProject[];
-  const projectIndex = associatedProjects.findIndex((p) => p.slug === project.slug);
-  const previousProject = projectIndex > 0 && associatedProjects[projectIndex - 1];
-  const nextProject =
-    projectIndex < associatedProjects.length - 1 && associatedProjects[projectIndex + 1];
-
-  if (!project) {
+  if (!project || (project.hidden && process.env.NODE_ENV !== 'development')) {
     notFound();
   }
 
-  const allImages = project.blocks?.flat().filter((e) => 'src' in (e as any)) as StaticImageData[];
+  const allWorks = await getAllWorks();
+  const visibleWorks = allWorks.filter((w) => !w.hidden);
+
+  const associatedProjects = visibleWorks.filter(
+    (p) => intersection(p.tags, project.tags).length > 0,
+  );
+  const projectIndex = associatedProjects.findIndex((p) => p.slug === project.slug);
+  const previousProject = projectIndex > 0 ? associatedProjects[projectIndex - 1] : null;
+  const nextProject =
+    projectIndex < associatedProjects.length - 1 ? associatedProjects[projectIndex + 1] : null;
 
   return (
     <>
-      {project.slug && <ViewLogger pathname={`/work/${project.slug}`} />}
+      <ViewLogger pathname={`/work/${project.slug}`} />
       <DynamicVHVarsSetter />
       <MousePositionVarsSetter />
       <div className="flex-1 px-5 py-10 [html:has(&)_footer>*:not(.nav)]:invisible">
         <Heading className="mb-2 max-w-xl text-left text-5xl">{project.title}</Heading>
         <p className="max-w-xl text-left">{project.description}</p>
         <div className="mt-10 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center ">
-          {(project.tags?.length || 0) > 0 && (
+          {project.tags.length > 0 && (
             <div className="justify-left flex flex-wrap gap-2">
-              {project.tags?.map((t, i) => (
+              {project.tags.map((t, i) => (
                 <Tag key={i} className="text-sm">
                   {t}
                 </Tag>
@@ -116,42 +108,31 @@ export default async function Work({ params }: { params: Promise<{ slug: string 
             </Tag>
           )}
         </div>
-        <Gallery sources={allImages}>
+
+        {project.contentHtml && (
+          <div
+            className="prose prose-neutral dark:prose-invert mt-12 max-w-xl"
+            dangerouslySetInnerHTML={{ __html: project.contentHtml }}
+          />
+        )}
+
+        {project.images.length > 0 && (
           <div className="mt-[80px] flex flex-col gap-2 md:gap-4">
-            {project.blocks?.map((block, blockI) => {
-              const isImageBlock = block.every((e) => 'src' in (e as any));
-              if (isImageBlock) {
-                return (
-                  <div className="justify-left flex gap-2 md:gap-4" key={blockI}>
-                    {(block as StaticImageData[]).map((e, i, items) => (
-                      <div key={i} className="max-h-[700px] flex-1 [&:only-child_img]:object-cover">
-                        <GalleryTrigger
-                          key={i}
-                          at={allImages.findIndex(
-                            (e) => e.src === (block as StaticImageData[])[i].src,
-                          )}
-                        >
-                          <Image
-                            priority={blockI === 0}
-                            src={e}
-                            alt=""
-                            sizes={genImageSizes(items.length)}
-                            className="m-auto max-h-full w-full object-cover focus-within:outline-theme-1"
-                          />
-                        </GalleryTrigger>
-                      </div>
-                    ))}
-                  </div>
-                );
-              }
-              return (
-                <div className="my-8" key={blockI}>
-                  {(block as ReactNode[]).map((e, i) => e)}
-                </div>
-              );
-            })}
+            {project.images.map((image, i) => (
+              <div key={i} className="max-h-[700px] flex-1 [&:only-child_img]:object-cover">
+                <Image
+                  priority={i === 0}
+                  src={image}
+                  alt={`${project.title} - ${i + 1}`}
+                  fill
+                  className="!static m-auto max-h-full w-full object-cover"
+                  sizes="(max-width: 1360px) 100vw, 1360px"
+                />
+              </div>
+            ))}
           </div>
-        </Gallery>
+        )}
+
         <Divider className="mt-24 text-center text-sm">{project.title}</Divider>
         <div className="m-auto mt-20 flex max-w-3xl flex-col gap-9">
           {previousProject || nextProject ? (

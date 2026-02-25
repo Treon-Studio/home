@@ -10,7 +10,7 @@ type Line = string | ReactNode;
 
 const staggerMs = 300;
 
-export default function Hheading({ className, ...props }: ComponentProps<'h1'>) {
+export default function HomeHeading({ className, ...props }: ComponentProps<'h1'>) {
   const index = useRef(0);
   const textRefs = useRef(new Map<number, Controls>());
   const lines: Line[] = ['Crafting digital', ' experiences'];

@@ -16,17 +16,17 @@ import Image from '~/src/components/ui/Image';
 import Tag from '~/src/components/ui/Tag';
 import { useViewLogger } from '~/src/components/ViewCounter';
 import useMatchMedia from '~/src/hooks/useMatchMedia';
+import { ResourcePost } from '~/src/lib/resources';
 import { cn } from '~/src/util';
 
 import Card from '../../work/components/Card';
-import { Resource } from '../constants';
 
 function hostname(url: string): string {
   return new URL(url).hostname;
 }
 
 type Props = {
-  resources: Resource[];
+  resources: ResourcePost[];
 };
 
 export default function ResourcesGrid({ resources }: Props) {
@@ -130,7 +130,7 @@ export default function ResourcesGrid({ resources }: Props) {
                   </div>
                 </div>
               </DrawerContent>
-              <DrawerTrigger asChild disabled={!Boolean(resource.images)}>
+              <DrawerTrigger asChild disabled={!resource.images?.length}>
                 <motion.button
                   key={resource.slug}
                   initial={{ translateY: 75, opacity: 0 }}

@@ -2,9 +2,9 @@ import { Metadata } from 'next';
 
 import ClientRendered from '~/src/components/ClientRendered';
 import ViewLogger from '~/src/components/ViewCounter';
+import { getAllResources } from '~/src/lib/resources';
 
 import ResourcesGrid from './components/ResourcesGrid';
-import { Filter, resources } from './constants';
 
 export const metadata: Metadata = {
   title: 'Resources & Tools | TreonStudio — Creative House from Indonesia',
@@ -13,9 +13,11 @@ export const metadata: Metadata = {
   keywords: ['developer tools Indonesia', 'free design resources', 'template website gratis', 'TreonStudio resources'],
 };
 
-export default async function Shop({ searchParams }: { searchParams: Promise<{ f?: Filter }> }) {
+export default async function Shop({ searchParams }: { searchParams: Promise<{ f?: string }> }) {
   const params = await searchParams;
-  const filteredResources = resources.filter((r) => {
+  const allResources = await getAllResources();
+
+  const filteredResources = allResources.filter((r) => {
     if (r.hidden) {
       return false;
     }

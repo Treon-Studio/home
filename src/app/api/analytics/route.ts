@@ -18,6 +18,6 @@ export async function GET(req: Request) {
     return NextResponse.json({ stats });
   } catch (e) {
     console.error(e);
-    NextResponse.json({ message: 'Something went wrong.' }, { status: 500 });
+    return NextResponse.json({ message: 'Something went wrong.' }, { status: 500 });
   }
 }

@@ -1,10 +1,10 @@
 import { ArrowRightIcon } from '~/src/components/icons';
 import { relativeMouseClassname } from '~/src/components/MousePositionVarsSetter';
 import Image from '~/src/components/ui/Image';
+import { WorkPost } from '~/src/lib/works';
 import { cn } from '~/src/util';
 
 import Card from '../../components/Card';
-import { StaticProject } from '../../constants';
 
 import './PaginationCard.css';
 
@@ -12,7 +12,7 @@ export default function PaginationCard({
   project,
   direction,
 }: {
-  project: StaticProject;
+  project: WorkPost;
   direction: 'left' | 'right';
 }) {
   return (
@@ -28,7 +28,7 @@ export default function PaginationCard({
         )}
       >
         <Image
-          src={project.preview.src}
+          src={project.preview}
           className="h-full w-full object-cover opacity-30 transition-all duration-500 ease-in-out group-hover:scale-110"
           fill
           sizes="(max-width: 768px) 50vw, 350px"

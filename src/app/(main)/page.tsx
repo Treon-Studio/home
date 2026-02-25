@@ -1,7 +1,4 @@
-import Link from 'next/link';
-
 import MousePositionVarsSetter from '~/src/components/MousePositionVarsSetter';
-import Button from '~/src/components/ui/Button';
 import ViewCounter from '~/src/components/ViewCounter';
 
 import {
@@ -30,16 +27,6 @@ import { getAllBlogs } from '~/src/lib/blog';
 import SystemMetricsCollector from '~/src/lib/SystemMetricsCollector';
 import { withTimeout } from '~/src/util';
 
-import { Filter } from './work/constants';
-
-type FilterHref = `/work?f=${Filter}`;
-
-const projectLinks: Array<{ label: string; href: FilterHref }> = [
-  { label: 'Products', href: '/work?f=products' },
-  { label: 'Community', href: '/work?f=community' },
-  { label: 'Services', href: '/work?f=services' },
-];
-
 const getCards = ({ sketchbookCard }: { sketchbookCard: boolean }) => [
   { gridArea: '👋', Component: BioCard },
   { gridArea: '👔', Component: ExperienceCard },
@@ -56,8 +43,9 @@ const getCards = ({ sketchbookCard }: { sketchbookCard: boolean }) => [
 ];
 
 const fetchSneakPeekCount = ({ timeout = 1000 }) => {
+  const host = process.env.NEXT_PUBLIC_HOST || 'https://treonstudio.com';
   const responsePromise = fetch(
-    process.env.NEXT_PUBLIC_HOST +
+    host +
       '/api/stats?' +
       new URLSearchParams([
         ['pathname', '/#sneak-peek'],

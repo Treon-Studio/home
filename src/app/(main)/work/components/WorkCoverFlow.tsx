@@ -13,29 +13,28 @@ import {
 import { CoverFlow, type CoverFlowItem } from '~/src/components/ui/CoverFlow';
 import Image from '~/src/components/ui/Image';
 import Tag from '~/src/components/ui/Tag';
-
-import { projects, type StaticProject } from '../constants';
-
-const staticProjects = projects.filter(
-  (p): p is StaticProject & { hidden?: boolean } => !p.hidden && p.type !== 'component',
-);
-
-const items: CoverFlowItem[] = staticProjects.map((project, i) => ({
-  id: i + 1,
-  image: project.preview.src,
-  title: project.title,
-  subtitle: project.tags?.slice(0, 2).join(' / '),
-}));
+import { WorkPost } from '~/src/lib/works';
 
 function hostname(url: string): string {
   return new URL(url).hostname;
 }
 
-export default function WorkCoverFlow() {
+type Props = {
+  works: WorkPost[];
+};
+
+export default function WorkCoverFlow({ works }: Props) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
-  const selectedProject = selectedIndex !== null ? staticProjects[selectedIndex] : null;
+  const items: CoverFlowItem[] = works.map((work, i) => ({
+    id: i + 1,
+    image: work.preview,
+    title: work.title,
+    subtitle: work.tags?.slice(0, 2).join(' / '),
+  }));
+
+  const selectedProject = selectedIndex !== null ? works[selectedIndex] : null;
 
   return (
     <div className="flex h-[calc(100svh-240px)] w-full items-center overflow-hidden">
