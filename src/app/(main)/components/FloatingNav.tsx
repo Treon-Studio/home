@@ -12,9 +12,9 @@ import { ArrowRightIcon } from '~/src/components/icons';
 import { cn } from '~/src/util';
 
 const links = {
-  '/work': { label: 'Works' },
+  '/works': { label: 'Works' },
   '/': { label: 'About' },
-  '/shop': { label: 'Resources' },
+  '/resources': { label: 'Resources' },
   '/contact': { label: 'Contact' },
 };
 

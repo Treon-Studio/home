@@ -81,6 +81,16 @@ export const metadata: Metadata = {
   description:
     'TreonStudio adalah creative house & software house di Jakarta, Indonesia. Kami bantu brand, startup, dan UMKM membangun website, aplikasi mobile, dan design system yang berdampak.',
   keywords: ['about TreonStudio', 'software house Jakarta', 'creative house Indonesia', 'tentang TreonStudio', 'digital agency Jakarta'],
+  openGraph: {
+    title: 'About | TreonStudio — Creative House & Software House Jakarta',
+    description: 'Creative house & software house di Jakarta — membantu brand, startup, dan UMKM membangun produk digital yang berdampak.',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'About | TreonStudio — Creative House & Software House Jakarta',
+    description: 'Creative house & software house di Jakarta — membantu brand, startup, dan UMKM membangun produk digital yang berdampak.',
+  },
 };
 
 export default async function Home() {

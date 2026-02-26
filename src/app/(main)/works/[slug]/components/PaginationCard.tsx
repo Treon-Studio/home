@@ -32,7 +32,7 @@ export default function PaginationCard({
           className="h-full w-full object-cover opacity-30 transition-all duration-500 ease-in-out group-hover:scale-110"
           fill
           sizes="(max-width: 768px) 50vw, 350px"
-          alt=""
+          alt={`Preview ${project.title}`}
         />
       </div>
       <div

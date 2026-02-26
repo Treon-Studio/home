@@ -7,7 +7,7 @@ import Button from '~/src/components/ui/Button';
 
 import MainHeader from '../../components/Header';
 
-const filters = ['all', 'templates', 'tools', 'assets'] as const;
+const filters = ['all', 'products', 'community', 'services'] as const;
 
 function getFilterLabel(tag: string): string {
   return tag
@@ -30,7 +30,7 @@ export default function Header() {
             variant={f === filter ? 'secondary' : 'primary'}
             className="shrink-0 text-xs md:text-sm"
           >
-            <Link {...{ href: f === 'all' ? `/shop` : `/shop?f=${f}` }}>{getFilterLabel(f)}</Link>
+            <Link {...{ href: f === 'all' ? `/works` : `/works?f=${f}` }}>{getFilterLabel(f)}</Link>
           </Button>
         ))}
       </div>

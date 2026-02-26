@@ -11,6 +11,17 @@ export const metadata: Metadata = {
   description:
     'Kumpulan resource, tools, dan template dari TreonStudio untuk developer, desainer, dan kreator digital Indonesia. Gratis dan open source.',
   keywords: ['developer tools Indonesia', 'free design resources', 'template website gratis', 'TreonStudio resources'],
+  alternates: { canonical: '/resources' },
+  openGraph: {
+    title: 'Resources & Tools | TreonStudio',
+    description: 'Kumpulan resource, tools, dan template untuk developer, desainer, dan kreator digital Indonesia.',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Resources & Tools | TreonStudio',
+    description: 'Kumpulan resource, tools, dan template untuk developer, desainer, dan kreator digital Indonesia.',
+  },
 };
 
 export default async function Shop({ searchParams }: { searchParams: Promise<{ f?: string }> }) {
@@ -31,7 +42,7 @@ export default async function Shop({ searchParams }: { searchParams: Promise<{ f
 
   return (
     <div className="flex flex-1 flex-col">
-      <ViewLogger pathname="/shop" />
+      <ViewLogger pathname="/resources" />
       <main className="flex-1">
         <ClientRendered>
           <ResourcesGrid resources={filteredResources} />

@@ -5,6 +5,7 @@ import matter from 'gray-matter';
 import { JSDOM } from 'jsdom';
 import DOMPurify from 'dompurify';
 import { remark } from 'remark';
+import remarkGfm from 'remark-gfm';
 import html from 'remark-html';
 
 const worksDirectory = path.join(process.cwd(), 'content/works');
@@ -12,6 +13,7 @@ const worksDirectory = path.join(process.cwd(), 'content/works');
 export type WorkPost = {
   slug: string;
   title: string;
+  tagline: string;
   description: string;
   filters: string[];
   tags: string[];
@@ -20,6 +22,7 @@ export type WorkPost = {
   preview: string;
   images: string[];
   hidden: boolean;
+  order: number;
   contentHtml: string;
 };
 
@@ -39,12 +42,13 @@ export async function getWorkBySlug(slug: string): Promise<WorkPost | null> {
   const fileContents = await fs.readFile(filePath, 'utf8');
   const { data, content } = matter(fileContents);
 
-  const processedContent = await remark().use(html).process(content);
+  const processedContent = await remark().use(remarkGfm).use(html).process(content);
   const contentHtml = purify.sanitize(processedContent.toString());
 
   return {
     slug: data.slug || slug,
     title: data.title || slug,
+    tagline: data.tagline || '',
     description: data.description || '',
     filters: data.filters || [],
     tags: data.tags || [],
@@ -53,6 +57,7 @@ export async function getWorkBySlug(slug: string): Promise<WorkPost | null> {
     preview: data.preview || '',
     images: data.images || [],
     hidden: data.hidden ?? false,
+    order: data.order ?? 99,
     contentHtml,
   };
 }
@@ -68,5 +73,5 @@ export async function getAllWorks(): Promise<WorkPost[]> {
     }
   }
 
-  return works;
+  return works.sort((a, b) => a.order - b.order);
 }

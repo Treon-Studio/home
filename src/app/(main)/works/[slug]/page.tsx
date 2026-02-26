@@ -38,6 +38,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const description = project.description
     || `Proyek ${project.title} oleh TreonStudio — creative house dari Jakarta, Indonesia.`;
 
+  const url = `https://treonstudio.com/works/${slug}`;
+
   return {
     title,
     description,
@@ -48,10 +50,19 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       'portfolio',
       'proyek digital Indonesia',
     ],
+    alternates: { canonical: `/works/${slug}` },
     openGraph: {
       title,
       description,
       type: 'article',
+      url,
+      images: project.preview ? [{ url: project.preview, width: 1200, height: 630, alt: project.title }] : undefined,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: project.preview ? [project.preview] : undefined,
     },
   };
 }
@@ -76,9 +87,33 @@ export default async function Work({ params }: { params: Promise<{ slug: string 
   const nextProject =
     projectIndex < associatedProjects.length - 1 ? associatedProjects[projectIndex + 1] : null;
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: project.title,
+    description: project.description,
+    image: project.preview ? `https://treonstudio.com${project.preview}` : undefined,
+    url: `https://treonstudio.com/works/${project.slug}`,
+    author: {
+      '@type': 'Organization',
+      name: 'TreonStudio',
+      url: 'https://treonstudio.com',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'TreonStudio',
+      logo: { '@type': 'ImageObject', url: 'https://treonstudio.com/favicon.ico' },
+    },
+    keywords: project.tags.join(', '),
+  };
+
   return (
     <>
-      <ViewLogger pathname={`/work/${project.slug}`} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <ViewLogger pathname={`/works/${project.slug}`} />
       <DynamicVHVarsSetter />
       <MousePositionVarsSetter />
       <div className="flex-1 px-5 py-10 [html:has(&)_footer>*:not(.nav)]:invisible">
@@ -142,12 +177,12 @@ export default async function Work({ params }: { params: Promise<{ slug: string 
           ) : null}
           <div className="flex flex-col justify-center gap-6 md:flex-row md:*:max-w-[400px]">
             {previousProject && (
-              <Link href={`/work/${previousProject.slug}`} className="flex-1 rounded-xl">
+              <Link href={`/works/${previousProject.slug}`} className="flex-1 rounded-xl">
                 <PaginationCard direction="left" project={previousProject} />
               </Link>
             )}
             {nextProject && (
-              <Link href={`/work/${nextProject.slug}`} className="flex-1 rounded-xl">
+              <Link href={`/works/${nextProject.slug}`} className="flex-1 rounded-xl">
                 <PaginationCard direction="right" project={nextProject} />
               </Link>
             )}
