@@ -1,8 +1,13 @@
+'use client';
+
 import { ReactNode } from 'react';
+import { useTranslations } from 'next-intl';
 
 import FloatingNav from './FloatingNav';
 
 export default function Footer({ children }: { children?: ReactNode }) {
+  const t = useTranslations('footer');
+
   return (
     <>
       <div className="nav sticky bottom-5 z-11 mx-auto mb-5 rounded-full md:fixed md:bottom-8 md:left-1/2 md:mb-0 md:-translate-x-1/2">
@@ -19,7 +24,7 @@ export default function Footer({ children }: { children?: ReactNode }) {
             >
               Archivo
             </a>
-            , paired with{' '}
+            {t('pairedWith')}{' '}
             <a
               href="https://fonts.google.com/specimen/Inter"
               target="_blank"
@@ -32,7 +37,7 @@ export default function Footer({ children }: { children?: ReactNode }) {
         </div>
 
         <div className="text-xs">
-          Built by{' '}
+          {t('builtBy')}{' '}
           <a
             href="https://treonstudio.com"
             className="rounded-sm underline"

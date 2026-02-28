@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 import SneakPeekPhoto from '~/public/home/sneak_peek-3.png';
 import { EyeIcon, EyeOffIcon } from '~/src/components/icons';
@@ -34,6 +35,7 @@ const submitClicks = (amount: number) => {
 };
 
 export default function SneakPeekCard({ currentCount }: { currentCount: number }) {
+  const t = useTranslations('sneakPeek');
   const [clickCount, setClickCount] = useState(0);
   const cycleClickCount = clickCount % (maxClicks + 1);
 
@@ -66,12 +68,12 @@ export default function SneakPeekCard({ currentCount }: { currentCount: number }
   return (
     <Card className="flex flex-col">
       <CardTitle variant="mono" className="mb-2">
-        In Progress
+        {t('title')}
       </CardTitle>
       <div className="mb-20 flex items-start justify-between xl:mb-[120px]">
         <div className="font-archivo text-3xl md:text-4xl">
-          Web <br className="hidden md:block" />
-          Tenang.ai
+          {t('category')} <br className="hidden md:block" />
+          {t('projectName')}
         </div>
       </div>
       <div className="relative flex flex-col gap-4">
@@ -92,7 +94,7 @@ export default function SneakPeekCard({ currentCount }: { currentCount: number }
             onClick={handleClick}
           >
             {revealed ? <EyeIcon className="h-5 w-5" /> : <EyeOffIcon className="h-5 w-5" />}
-            Click to {revealed ? 'hide' : 'see'}
+            {revealed ? t('clickToHide') : t('clickToSee')}
           </button>
           <span
             className={cn(
@@ -103,7 +105,7 @@ export default function SneakPeekCard({ currentCount }: { currentCount: number }
               },
             )}
           >
-            {currentCount + clickCount} clicks
+            {currentCount + clickCount} {t('clicks')}
           </span>
         </div>
       </div>
@@ -111,7 +113,7 @@ export default function SneakPeekCard({ currentCount }: { currentCount: number }
       <div className="relative h-full min-h-[284px] w-full overflow-hidden rounded-md">
         <Image
           src={SneakPeekPhoto}
-          alt="POS Himajin - Point of Sale for ornamental fish store"
+          alt={t('projectAlt')}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1280px): 50vw, 284px"
           placeholder="blur"

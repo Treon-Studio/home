@@ -1,19 +1,19 @@
 'use client';
 
 import { ComponentProps, ReactNode, useEffect, useRef } from 'react';
+import { useTranslations } from 'next-intl';
 
 import HighlightedText, { Controls } from '~/src/components/HighlightedHeading';
 import Heading from '~/src/components/ui/Heading';
 import { cn } from '~/src/util';
 
-type Line = string | ReactNode;
-
 const staggerMs = 300;
 
 export default function HomeHeading({ className, ...props }: ComponentProps<'h1'>) {
+  const t = useTranslations('heading');
   const index = useRef(0);
   const textRefs = useRef(new Map<number, Controls>());
-  const lines: Line[] = ['Crafting digital', ' experiences'];
+  const lines: (string | ReactNode)[] = [t('line1'), t('line2')];
 
   useEffect(() => {
     if (index.current === lines.length) {
@@ -43,7 +43,7 @@ export default function HomeHeading({ className, ...props }: ComponentProps<'h1'
           {l}
         </HighlightedText>
       ))}
-      <span className="sr-only">Crafting digital experiences</span>
+      <span className="sr-only">{t('srOnly')}</span>
     </Heading>
   );
 }

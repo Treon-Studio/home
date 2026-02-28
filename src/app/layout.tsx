@@ -5,6 +5,8 @@ import './globals.css';
 
 import Script from 'next/script';
 
+import { LocaleProvider } from '~/src/providers/LocaleProvider';
+
 import { ThemeProvider } from './(main)/components/ThemeProvider';
 
 const inter = Inter({
@@ -180,7 +182,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="font-sans">
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <LocaleProvider>{children}</LocaleProvider>
+        </ThemeProvider>
         {process.env.NODE_ENV === 'production' && (
           <Script
             src="https://cloud.umami.is/script.js"

@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
-import PortraitSrc from '~/public/home/us.jpeg';
+import PortraitSrc from '~/public/home/us.webp';
 import {
   ArrowRightIcon,
   GithubIcon,
@@ -18,31 +19,13 @@ import Card from './Card';
 
 import './cards.css';
 
-const social = [
-  {
-    url: 'https://twitter.com/treonstudio',
-    Icon: TwitterIcon,
-    attrs: { 'aria-label': 'Go to Twitter' },
-  },
-  {
-    url: 'https://github.com/treonstudio',
-    Icon: GithubIcon,
-    attrs: { 'aria-label': 'Go to GitHub' },
-  },
-  {
-    url: 'https://www.linkedin.com/company/treonstudio/',
-    Icon: LinkedinIcon,
-    attrs: { 'aria-label': 'Go to LinkedIn' },
-  },
-];
-
 type Vertex = { x: number; y: number };
 
-const labelMeta = [
-  { text: 'Visionary', labelSide: 'left' as const },
-  { text: 'Unifying', labelSide: 'right' as const },
-  { text: 'Committed', labelSide: 'right' as const },
-  { text: 'Clear', labelSide: 'left' as const },
+const labelKeys = [
+  { key: 'visionary' as const, labelSide: 'left' as const },
+  { key: 'unifying' as const, labelSide: 'right' as const },
+  { key: 'committed' as const, labelSide: 'right' as const },
+  { key: 'clear' as const, labelSide: 'left' as const },
 ];
 
 // Each variant is 4 vertices: [Visionary, Unifying, Committed, Clear]
@@ -78,6 +61,7 @@ function toClipPath(vertices: Vertex[]) {
 }
 
 export default function BioCard() {
+  const t = useTranslations('bio');
   const [variantIndex, setVariantIndex] = useState(0);
 
   useEffect(() => {
@@ -90,11 +74,29 @@ export default function BioCard() {
   const currentVertices = shapeVariants[variantIndex];
   const clipPath = toClipPath(currentVertices);
 
+  const social = [
+    {
+      url: 'https://twitter.com/treonstudio',
+      Icon: TwitterIcon,
+      attrs: { 'aria-label': t('goToTwitter') },
+    },
+    {
+      url: 'https://github.com/treonstudio',
+      Icon: GithubIcon,
+      attrs: { 'aria-label': t('goToGithub') },
+    },
+    {
+      url: 'https://www.linkedin.com/company/treonstudio/',
+      Icon: LinkedinIcon,
+      attrs: { 'aria-label': t('goToLinkedin') },
+    },
+  ];
+
   return (
     <Card className="flex flex-1 flex-col gap-4 bg-panel-background">
       <div className="relative">
         <Image
-          alt="TreonStudio Team"
+          alt={t('teamAlt')}
           src={PortraitSrc}
           placeholder="blur"
           className="h-full w-full object-cover object-top transition-[clip-path] duration-1000 ease-in-out"
@@ -109,7 +111,7 @@ export default function BioCard() {
         />
         {currentVertices.map((vertex, i) => (
           <span
-            key={labelMeta[i].text}
+            key={labelKeys[i].key}
             className="absolute h-0 w-0 transition-all duration-1000 ease-in-out"
             style={{ top: `${vertex.y}%`, left: `${vertex.x}%` }}
           >
@@ -120,29 +122,27 @@ export default function BioCard() {
             <span
               className="absolute whitespace-nowrap text-xs font-medium text-text-primary sm:text-sm"
               style={
-                labelMeta[i].labelSide === 'left'
+                labelKeys[i].labelSide === 'left'
                   ? { right: 8, top: '50%', transform: 'translateY(-50%)' }
                   : { left: 8, top: '50%', transform: 'translateY(-50%)' }
               }
             >
-              {labelMeta[i].text}
+              {t(labelKeys[i].key)}
             </span>
           </span>
         ))}
       </div>
 
       <p className="panel text-sm leading-6 text-text-primary">
-        We are TreonStudio — a creative house from Indonesia turning bold ideas into digital
-        experiences that matter. From web and mobile to branding and design systems, we craft
-        every pixel with purpose. Based in{' '}
+        {t('description')}{' '}
         <TextLink className=" font-semibold hover:text-theme-1" href="https://treonstudio.com">
-          Yogyakarta, Indonesia
+          {t('yogyakarta')}
         </TextLink>{' '}
-        — let&apos;s create something extraordinary together.
+        {t('descriptionEnd')}
       </p>
       <div className="mt-4 flex flex-col items-start justify-between text-text-primary md:flex-row md:items-center">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="text-sm">Connect with us on</span>
+          <span className="text-sm">{t('connectWith')}</span>
           <div className="flex gap-2">
             {social.map(({ url, Icon, attrs }) => (
               <a
@@ -159,7 +159,7 @@ export default function BioCard() {
           </div>
         </div>
         <Button className="mt-10 md:mt-0" iconRight={<ArrowRightIcon />} asChild>
-          <Link href="/contact">Get in touch</Link>
+          <Link href="/contact">{t('getInTouch')}</Link>
         </Button>
       </div>
     </Card>

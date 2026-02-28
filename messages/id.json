@@ -1,0 +1,141 @@
+{
+  "nav": {
+    "works": "Works",
+    "about": "About",
+    "resources": "Resources",
+    "contact": "Kontak",
+    "scrollToTop": "Gulir ke atas"
+  },
+  "header": {
+    "goToHome": "Pergi ke Beranda"
+  },
+  "heading": {
+    "line1": "Menciptakan",
+    "line2": " pengalaman digital",
+    "srOnly": "Menciptakan pengalaman digital"
+  },
+  "bio": {
+    "visionary": "Visioner",
+    "unifying": "Mempersatukan",
+    "committed": "Berkomitmen",
+    "clear": "Jelas",
+    "teamAlt": "Tim TreonStudio",
+    "description": "Kami adalah TreonStudio — rumah kreatif dari Indonesia yang mengubah ide-ide berani menjadi pengalaman digital yang bermakna. Dari web dan mobile hingga branding dan design system, kami merancang setiap piksel dengan tujuan. Berbasis di",
+    "yogyakarta": "Yogyakarta, Indonesia",
+    "descriptionEnd": "— mari ciptakan sesuatu yang luar biasa bersama.",
+    "connectWith": "Terhubung dengan kami di",
+    "getInTouch": "Hubungi kami",
+    "goToTwitter": "Pergi ke Twitter",
+    "goToGithub": "Pergi ke GitHub",
+    "goToLinkedin": "Pergi ke LinkedIn"
+  },
+  "experience": {
+    "title": "LAYANAN KAMI",
+    "descriptionStart": "Kirim ",
+    "webApp": "web app",
+    "descriptionMid1": ". Go live di ",
+    "mobile": "mobile",
+    "descriptionMid2": ". Rancang ",
+    "designSystem": "design system",
+    "descriptionMid3": ". Dokumentasikan dengan ",
+    "technicalWriting": "technical writing",
+    "descriptionMid4": " yang jelas. Kami yang ",
+    "build": "bangun",
+    "descriptionEnd": " — kamu fokus pada visimu. Cukup ",
+    "reachOut": "hubungi kami",
+    "whenYouNeedUs": " kapan saja.",
+    "webDevelopment": "Web Development",
+    "mobileApp": "Mobile App",
+    "uiUx": "UI / UX",
+    "graphicDesign": "Desain Grafis",
+    "technicalWriter": "Technical Writer"
+  },
+  "sneakPeek": {
+    "title": "Sedang Dikerjakan",
+    "category": "Web",
+    "projectName": "Tenang.ai",
+    "clickToHide": "Klik untuk sembunyikan",
+    "clickToSee": "Klik untuk lihat",
+    "clicks": "klik",
+    "projectAlt": "POS Himajin - Point of Sale untuk toko ikan hias"
+  },
+  "photos": {
+    "title": "Produk Kami",
+    "goToSlide": "Ke slide {number}",
+    "constructionSaas": "SaaS Konstruksi",
+    "investrack": "Platform SaaS siap whitelabel untuk mengelola proyek konstruksi, tim, dan timeline secara menyeluruh.",
+    "documentManagement": "Manajemen Dokumen",
+    "dokukita": "Platform manajemen dokumen terpusat untuk menyimpan, mengatur, dan berkolaborasi pada file tim dengan mudah.",
+    "rentalSaas": "SaaS Rental",
+    "hunivo": "SaaS manajemen properti rental yang dibuat khusus untuk pemilik properti Indonesia untuk mengelola penyewa dan pembayaran.",
+    "crmTools": "Alat CRM",
+    "laju": "Alat CRM modern untuk menangani percakapan pelanggan, tiket dukungan, dan analitik penjualan dalam satu tempat.",
+    "designSystem": "Design System",
+    "bungas": "UI Kit plug-and-play untuk web dan mobile yang dibangun di atas design token untuk antarmuka yang konsisten dan scalable.",
+    "islamicLifestyle": "Gaya Hidup Islami",
+    "muslimfy": "Aplikasi gaya hidup Islami all-in-one dengan jadwal sholat, pembaca Al-Quran, dan pengingat harian untuk perjalanan spiritualmu."
+  },
+  "buka": {
+    "title": "Kisah Sukses",
+    "quote": "\"Saya pikir mendapatkan perhatian di media sosial hanya soal keberuntungan, tapi saya baru mulai melihat hasil setelah benar-benar membuat strategi sosial berbasis riset.\"",
+    "name": "Lorna Alvarado",
+    "role": "Owner Virtru Interior"
+  },
+  "code": {
+    "title": "Open Source",
+    "openOnGithub": "Buka {name} di GitHub"
+  },
+  "tools": {
+    "title": "Alat yang kami gunakan",
+    "description": "Perjalanan desain kami dimulai dari media cetak, tapi setelah menyelesaikan Master di Komunikasi Visual kami lebih fokus ke digital. Seiring waktu software andalan kami banyak berubah tapi saat ini favorit kami adalah Figma."
+  },
+  "stamps": {
+    "engineering": "Engineering",
+    "design": "Desain",
+    "inside": "Internal"
+  },
+  "notes": {
+    "title": "Catatan",
+    "description": "Membangun teknologi masa depan dengan pendekatan yang berpusat pada manusia. Terakhir diperbarui:",
+    "na": "N/A"
+  },
+  "team": {
+    "section1Description": "Di balik setiap proyek ada tim yang peduli mendalam terhadap keahlian, detail, dan orang-orang yang kami bangunkan.",
+    "section2Description": "Dibimbing oleh pemikir berpengalaman yang menantang cara berpikir kami dan mempertajam arah kami.",
+    "section3Description": "Organisasi yang sedang kami jajaki untuk kemitraan dan kolaborasi.",
+    "creative": "Kreatif",
+    "engineer": "Engineer",
+    "designer": "Desainer",
+    "strategy": "Strategi",
+    "business": "Bisnis",
+    "technology": "Teknologi",
+    "community": "Komunitas",
+    "hospitality": "Hospitality",
+    "media": "Media",
+    "agency": "Agensi"
+  },
+  "waitlist": {
+    "subscribe": "Berlangganan",
+    "done": "Selesai",
+    "enterEmail": "Masukkan email Anda",
+    "animatedText": "MARI BANGUN SESUATU YANG HEBAT BERSAMA \u2709 SIAP MEMULAI PROYEK BERIKUTNYA? \u2709 KAMI INGIN MENDENGAR DARI ANDA \u2709 WUJUDKAN IDE MENJADI KENYATAAN \u2709 "
+  },
+  "contact": {
+    "title": "Mari ciptakan sesuatu yang luar biasa",
+    "phoneAlt": "Telepon tergantung"
+  },
+  "contactLinks": {
+    "orReachUsThrough": "Atau hubungi kami melalui"
+  },
+  "footer": {
+    "pairedWith": ", dipasangkan dengan",
+    "builtBy": "Dibuat oleh"
+  },
+  "colorTheme": {
+    "house": "HOUSE",
+    "ofTreon": "OF TREON",
+    "location": "YOGYAKARTA, ID \u27e1",
+    "address": "JL. GEBLAGAN, TAMAN TIRTO \u27f6",
+    "contactInfo": "+62 812 3456 7890 \u27e8\u27e9 MARKETING@TREONSTUDIO.COM"
+  }
+}

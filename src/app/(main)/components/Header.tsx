@@ -2,17 +2,20 @@
 
 import Link from 'next/link';
 import { ReactNode, useRef } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { LogoIcon } from '~/src/components/icons';
 import VariableFontCursor from '~/src/components/ui/VariableFontCursor';
 import useScroll from '~/src/hooks/useScroll';
 import { cn } from '~/src/util';
 
-import ThemeSwitcher from './ThemeSwitcher';
+import LangSwitcher from './LangSwitcher';
+
 
 const headerTriggerY = 50;
 
 export default function Header({ children }: { children?: ReactNode }) {
+  const t = useTranslations('header');
   const { y, directionY } = useScroll();
   const logoRef = useRef<HTMLAnchorElement>(null);
 
@@ -30,7 +33,7 @@ export default function Header({ children }: { children?: ReactNode }) {
         ref={logoRef}
         href="/"
         className="flex items-center gap-2 rounded-full text-text-primary"
-        aria-label="Go to Home page"
+        aria-label={t('goToHome')}
       >
         <LogoIcon
           className={cn('text-[#FF5A00] transition-all duration-300', {
@@ -52,7 +55,7 @@ export default function Header({ children }: { children?: ReactNode }) {
       {children && (
         <div className="order-3 mt-4 w-full lg:order-0 lg:mt-0 lg:w-auto">{children}</div>
       )}
-      <ThemeSwitcher />
+      <LangSwitcher />
     </header>
   );
 }

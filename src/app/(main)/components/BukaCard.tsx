@@ -1,20 +1,24 @@
+'use client';
+
+import { useTranslations } from 'next-intl';
+
 import { LogoIcon } from '~/src/components/icons';
 
 import Card from './Card';
 
 export default function BukaCard() {
+  const t = useTranslations('buka');
+
   return (
     <Card className="relative flex h-full flex-col !bg-white !p-0 overflow-hidden">
       <div className="flex-1">
         {/* Speech bubble */}
         <div className="relative rounded-b-2xl bg-[#D8F3DC] p-5">
           <p className="mb-3 font-libertinus-serif text-xs italic text-[#3D1220]/60">
-            Success Story
+            {t('title')}
           </p>
           <blockquote className="font-semibold leading-[1.3] text-[#3D1220] md:text-lg">
-            &ldquo;I thought getting noticed on social media was a matter of luck, but I
-            didn&apos;t start seeing results until I actually created a research-backed social
-            strategy.&rdquo;
+            {t('quote')}
           </blockquote>
 
           {/* Smooth curved tail */}
@@ -36,8 +40,8 @@ export default function BukaCard() {
       {/* Client info */}
       <div className="flex items-center justify-between px-5 pb-5 pt-6">
         <div>
-          <p className="text-sm font-semibold text-[#3D1220]">Lorna Alvarado</p>
-          <p className="text-xs text-[#3D1220]/60">Owner Virtru Interior</p>
+          <p className="text-sm font-semibold text-[#3D1220]">{t('name')}</p>
+          <p className="text-xs text-[#3D1220]/60">{t('role')}</p>
         </div>
         <LogoIcon className="h-5 w-5 text-[#3D1220]/30" />
       </div>

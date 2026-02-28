@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
+import { useTranslations } from 'next-intl';
 
 import TextCursorProximity from '~/src/components/ui/TextCursorProximity';
 
@@ -22,6 +23,7 @@ const styles = {
 };
 
 export default function ColorThemeCard() {
+  const t = useTranslations('colorTheme');
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -38,7 +40,7 @@ export default function ColorThemeCard() {
             radius={100}
             containerRef={containerRef}
           >
-            HOUSE
+            {t('house')}
           </TextCursorProximity>
           <TextCursorProximity
             className="text-xl font-bold will-change-transform sm:text-2xl md:text-3xl"
@@ -47,7 +49,7 @@ export default function ColorThemeCard() {
             radius={100}
             containerRef={containerRef}
           >
-            OF TREON
+            {t('ofTreon')}
           </TextCursorProximity>
         </div>
 
@@ -60,7 +62,7 @@ export default function ColorThemeCard() {
               radius={70}
               containerRef={containerRef}
             >
-              YOGYAKARTA, ID ⟡
+              {t('location')}
             </TextCursorProximity>
             <TextCursorProximity
               className="text-right"
@@ -69,7 +71,7 @@ export default function ColorThemeCard() {
               radius={70}
               containerRef={containerRef}
             >
-              JL. GEBLAGAN, TAMAN TIRTO ⟶
+              {t('address')}
             </TextCursorProximity>
             <TextCursorProximity
               className="text-left"
@@ -78,7 +80,7 @@ export default function ColorThemeCard() {
               radius={70}
               containerRef={containerRef}
             >
-              +62 812 3456 7890 ⟨⟩ MARKETING@TREONSTUDIO.COM
+              {t('contactInfo')}
             </TextCursorProximity>
           </div>
         </div>

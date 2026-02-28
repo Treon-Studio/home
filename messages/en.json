@@ -1,0 +1,141 @@
+{
+  "nav": {
+    "works": "Works",
+    "about": "About",
+    "resources": "Resources",
+    "contact": "Contact",
+    "scrollToTop": "Scroll to top"
+  },
+  "header": {
+    "goToHome": "Go to Home page"
+  },
+  "heading": {
+    "line1": "Crafting digital",
+    "line2": " experiences",
+    "srOnly": "Crafting digital experiences"
+  },
+  "bio": {
+    "visionary": "Visionary",
+    "unifying": "Unifying",
+    "committed": "Committed",
+    "clear": "Clear",
+    "teamAlt": "TreonStudio Team",
+    "description": "We are TreonStudio — a creative house from Indonesia turning bold ideas into digital experiences that matter. From web and mobile to branding and design systems, we craft every pixel with purpose. Based in",
+    "yogyakarta": "Yogyakarta, Indonesia",
+    "descriptionEnd": "— let's create something extraordinary together.",
+    "connectWith": "Connect with us on",
+    "getInTouch": "Get in touch",
+    "goToTwitter": "Go to Twitter",
+    "goToGithub": "Go to GitHub",
+    "goToLinkedin": "Go to LinkedIn"
+  },
+  "experience": {
+    "title": "OUR SERVICES",
+    "descriptionStart": "Ship a ",
+    "webApp": "web app",
+    "descriptionMid1": ". Go live on ",
+    "mobile": "mobile",
+    "descriptionMid2": ". Craft a ",
+    "designSystem": "design system",
+    "descriptionMid3": ". Document it with ",
+    "technicalWriting": "clear technical writing",
+    "descriptionMid4": ". We handle the ",
+    "build": "build",
+    "descriptionEnd": " — you focus on the vision. Just ",
+    "reachOut": "reach out",
+    "whenYouNeedUs": " when you need us.",
+    "webDevelopment": "Web Development",
+    "mobileApp": "Mobile App",
+    "uiUx": "UI / UX",
+    "graphicDesign": "Graphic Design",
+    "technicalWriter": "Technical Writer"
+  },
+  "sneakPeek": {
+    "title": "In Progress",
+    "category": "Web",
+    "projectName": "Tenang.ai",
+    "clickToHide": "Click to hide",
+    "clickToSee": "Click to see",
+    "clicks": "clicks",
+    "projectAlt": "POS Himajin - Point of Sale for ornamental fish store"
+  },
+  "photos": {
+    "title": "Our Products",
+    "goToSlide": "Go to slide {number}",
+    "constructionSaas": "Construction SaaS",
+    "investrack": "A whitelabel-ready SaaS platform for managing construction projects, teams, and timelines end-to-end.",
+    "documentManagement": "Document Management",
+    "dokukita": "A centralized document management platform to store, organize, and collaborate on team files with ease.",
+    "rentalSaas": "Rental SaaS",
+    "hunivo": "A rental property management SaaS built specifically for Indonesian landlords to manage tenants and payments.",
+    "crmTools": "CRM Tools",
+    "laju": "A modern CRM tool to handle customer conversations, support tickets, and sales analytics in one place.",
+    "designSystem": "Design System",
+    "bungas": "A plug-and-play UI Kit for web and mobile built on design tokens for consistent, scalable interfaces.",
+    "islamicLifestyle": "Islamic Lifestyle",
+    "muslimfy": "An all-in-one Islamic lifestyle app with prayer times, Quran reader, and daily reminders for your spiritual journey."
+  },
+  "buka": {
+    "title": "Success Story",
+    "quote": "\"I thought getting noticed on social media was a matter of luck, but I didn't start seeing results until I actually created a research-backed social strategy.\"",
+    "name": "Lorna Alvarado",
+    "role": "Owner Virtru Interior"
+  },
+  "code": {
+    "title": "Open Source",
+    "openOnGithub": "Open {name} on GitHub"
+  },
+  "tools": {
+    "title": "Tools I use",
+    "description": "I started my design journey in print, but after completing my Master's in Visual Communication I mostly focused on digital. Over time my go-to software switched a lot but currently my favorite is Figma."
+  },
+  "stamps": {
+    "engineering": "Engineering",
+    "design": "Design",
+    "inside": "Inside"
+  },
+  "notes": {
+    "title": "Notes",
+    "description": "Building future-ready technology with human-centered approach. Last updated:",
+    "na": "N/A"
+  },
+  "team": {
+    "section1Description": "Behind every project is a team that cares deeply about craft, detail, and the people we build for.",
+    "section2Description": "Guided by experienced minds who challenge our thinking and sharpen our direction.",
+    "section3Description": "Organizations we are currently exploring partnerships and collaborations with.",
+    "creative": "Creative",
+    "engineer": "Engineer",
+    "designer": "Designer",
+    "strategy": "Strategy",
+    "business": "Business",
+    "technology": "Technology",
+    "community": "Community",
+    "hospitality": "Hospitality",
+    "media": "Media",
+    "agency": "Agency"
+  },
+  "waitlist": {
+    "subscribe": "Subscribe",
+    "done": "Done",
+    "enterEmail": "Enter your email",
+    "animatedText": "LET'S BUILD SOMETHING GREAT TOGETHER \u2709 READY TO START YOUR NEXT PROJECT? \u2709 WE'D LOVE TO HEAR FROM YOU \u2709 TURN YOUR IDEAS INTO REALITY \u2709 "
+  },
+  "contact": {
+    "title": "Let's create something extraordinary",
+    "phoneAlt": "Hanging phone"
+  },
+  "contactLinks": {
+    "orReachUsThrough": "Or reach us through"
+  },
+  "footer": {
+    "pairedWith": ", paired with",
+    "builtBy": "Built by"
+  },
+  "colorTheme": {
+    "house": "HOUSE",
+    "ofTreon": "OF TREON",
+    "location": "YOGYAKARTA, ID \u27e1",
+    "address": "JL. GEBLAGAN, TAMAN TIRTO \u27f6",
+    "contactInfo": "+62 812 3456 7890 \u27e8\u27e9 MARKETING@TREONSTUDIO.COM"
+  }
+}

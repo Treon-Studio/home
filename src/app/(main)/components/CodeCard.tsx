@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { ArrowUpRight, ChevronDown, FolderClosed, FolderLock, FolderOpen } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 import CardTitle from '~/src/components/ui/CardTitle';
 import { cn } from '~/src/util';
@@ -91,6 +92,7 @@ interface TreeNodeProps {
 }
 
 function TreeNode({ item, level, parentName }: TreeNodeProps) {
+  const t = useTranslations('code');
   const [isExpanded, setIsExpanded] = useState(true);
   const hasChildren = item.children && item.children.length > 0;
 
@@ -154,7 +156,7 @@ function TreeNode({ item, level, parentName }: TreeNodeProps) {
         {item.isLocked ? null : item.githubUrl ? (
           <a
             href={item.githubUrl}
-            aria-label={`Open ${item.name} on GitHub`}
+            aria-label={t('openOnGithub', { name: item.name })}
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-primary absolute right-2 rounded-md opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100"
@@ -182,10 +184,12 @@ function TreeNode({ item, level, parentName }: TreeNodeProps) {
 }
 
 export default function CodeCard() {
+  const t = useTranslations('code');
+
   return (
     <Card>
       <div className="flex h-full flex-col justify-between">
-        <CardTitle variant="mono">Open Source</CardTitle>
+        <CardTitle variant="mono">{t('title')}</CardTitle>
         <div className="relative">
           <TreeView data={directoryData} />
           <div className="pointer-events-none absolute bottom-0 left-0 h-12 w-full bg-gradient-to-t from-panel-background to-transparent" />

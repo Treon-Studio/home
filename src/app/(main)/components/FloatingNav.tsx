@@ -1,8 +1,10 @@
 'use client';
 
-import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSelectedLayoutSegment } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+
+import TransitionLink from './TransitionLink';
 
 import useScroll from '~/src/hooks/useScroll';
 
@@ -11,15 +13,16 @@ import './FloatingNav.css';
 import { ArrowRightIcon } from '~/src/components/icons';
 import { cn } from '~/src/util';
 
-const links = {
-  '/works': { label: 'Works' },
-  '/': { label: 'About' },
-  '/resources': { label: 'Resources' },
-  '/contact': { label: 'Contact' },
-};
+const linkKeys = {
+  '/works': 'works',
+  '/': 'about',
+  '/resources': 'resources',
+  '/contact': 'contact',
+} as const;
 
 export default function Navbar() {
-  const pathSegment = `/${useSelectedLayoutSegment() || ''}` as keyof typeof links;
+  const t = useTranslations('nav');
+  const pathSegment = `/${useSelectedLayoutSegment() || ''}` as keyof typeof linkKeys;
   const { y } = useScroll();
   const navRef = useRef<HTMLElement>(null);
   const linkRefs = useRef<Map<string, HTMLAnchorElement>>(new Map());
@@ -54,22 +57,22 @@ export default function Navbar() {
             left: `${highlight.left}px`,
           }}
         />
-        {Object.entries(links).map(([path, l]) => (
-          <Link
+        {Object.entries(linkKeys).map(([path, key]) => (
+          <TransitionLink
             href={path}
-            key={l.label}
+            key={key}
             ref={(el) => {
               if (el) linkRefs.current.set(path, el);
             }}
             className="text-text-primary z-1 rounded-full px-4 py-1.5 text-sm text-center"
           >
-            {l.label}
-          </Link>
+            {t(key)}
+          </TransitionLink>
         ))}
       </nav>
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        aria-label="Scroll to top"
+        aria-label={t('scrollToTop')}
         className={cn(
           'anchor-top absolute top-1/2 -translate-y-1/2 rounded-full transition-all duration-300',
           {

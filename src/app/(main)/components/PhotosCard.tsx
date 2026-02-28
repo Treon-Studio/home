@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 import CardTitle from '~/src/components/ui/CardTitle';
 import BoxCarousel, { type BoxCarouselRef, type CarouselItem } from '~/src/components/ui/BoxCarousel';
@@ -379,16 +380,21 @@ function HighlightCard({ color, patternColor, bgPattern, iconName, label, title,
   );
 }
 
-// ── Slide configs ─────────────────────────────────────────────────────────────
-const slideConfigs: HLCardProps[] = [
+// ── Slide configs (translation keys) ─────────────────────────────────────────
+type SlideConfig = Omit<HLCardProps, 'label' | 'description'> & {
+  labelKey: string;
+  descriptionKey: string;
+};
+
+const slideConfigs: SlideConfig[] = [
   {
     color: '#00569b',
     patternColor: '#004a86',
     bgPattern: 'circles-corner',
     iconName: 'building',
-    label: 'Construction SaaS',
+    labelKey: 'constructionSaas',
     title: 'Investrack',
-    description: 'A whitelabel-ready SaaS platform for managing construction projects, teams, and timelines end-to-end.',
+    descriptionKey: 'investrack',
     rating: 4.6,
     completion: 0.45,
   },
@@ -397,9 +403,9 @@ const slideConfigs: HLCardProps[] = [
     patternColor: '#2F8D6A',
     bgPattern: 'grass-left',
     iconName: 'document',
-    label: 'Document Management',
+    labelKey: 'documentManagement',
     title: 'DokuKita',
-    description: 'A centralized document management platform to store, organize, and collaborate on team files with ease.',
+    descriptionKey: 'dokukita',
     rating: 4.8,
     completion: 0.72,
     logoText: '/home/products/Logo-Text-Dokukita.svg',
@@ -410,9 +416,9 @@ const slideConfigs: HLCardProps[] = [
     patternColor: 'hsl(262, 44%, 48%)',
     bgPattern: 'circles-top',
     iconName: 'home',
-    label: 'Rental SaaS',
+    labelKey: 'rentalSaas',
     title: 'Hunivo',
-    description: 'A rental property management SaaS built specifically for Indonesian landlords to manage tenants and payments.',
+    descriptionKey: 'hunivo',
     rating: 4.3,
     completion: 0.58,
     logoText: '/home/products/Logo-Text-Hunivo.svg',
@@ -423,9 +429,9 @@ const slideConfigs: HLCardProps[] = [
     patternColor: '#0678c2',
     bgPattern: 'grass-bottom',
     iconName: 'chat',
-    label: 'CRM Tools',
+    labelKey: 'crmTools',
     title: 'Laju',
-    description: 'A modern CRM tool to handle customer conversations, support tickets, and sales analytics in one place.',
+    descriptionKey: 'laju',
     rating: 4.7,
     completion: 0.63,
     logoText: '/home/products/Logo-Text-Laju.svg',
@@ -436,9 +442,9 @@ const slideConfigs: HLCardProps[] = [
     patternColor: '#e8e8e8',
     bgPattern: 'dots-scattered',
     iconName: 'palette',
-    label: 'Design System',
+    labelKey: 'designSystem',
     title: 'Bungas',
-    description: 'A plug-and-play UI Kit for web and mobile built on design tokens for consistent, scalable interfaces.',
+    descriptionKey: 'bungas',
     rating: 4.5,
     completion: 0.35,
     logoText: '/home/products/Logo-Text-Bungas.svg',
@@ -451,9 +457,9 @@ const slideConfigs: HLCardProps[] = [
     patternColor: 'hsl(145, 40%, 36%)',
     bgPattern: 'circles-corner',
     iconName: 'people',
-    label: 'Islamic Lifestyle',
+    labelKey: 'islamicLifestyle',
     title: 'Muslimfy',
-    description: 'An all-in-one Islamic lifestyle app with prayer times, Quran reader, and daily reminders for your spiritual journey.',
+    descriptionKey: 'muslimfy',
     rating: 4.4,
     completion: 0.4,
     logoText: '/home/products/Logo-Text-Muslimfy.svg',
@@ -461,15 +467,10 @@ const slideConfigs: HLCardProps[] = [
   },
 ];
 
-const slides: CarouselItem[] = slideConfigs.map((config, i) => ({
-  id: String(i),
-  type: 'custom' as const,
-  content: <HighlightCard {...config} />,
-}));
-
 // ── PhotosCard ────────────────────────────────────────────────────────────────
 
 export default function PhotosCard() {
+  const t = useTranslations('photos');
   const carouselRef = useRef<BoxCarouselRef>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -491,17 +492,23 @@ export default function PhotosCard() {
     return () => observer.disconnect();
   }, []);
 
+  const slides: CarouselItem[] = slideConfigs.map(({ labelKey, descriptionKey, ...rest }, i) => ({
+    id: String(i),
+    type: 'custom' as const,
+    content: <HighlightCard {...rest} label={t(labelKey)} description={t(descriptionKey)} />,
+  }));
+
   return (
     <Card className="relative flex flex-col gap-5">
       <Pointer>
         <div className="text-3xl">👀</div>
       </Pointer>
       <div className="flex flex-col items-start justify-between gap-2 xxs:flex-row xxs:items-center">
-        <CardTitle variant="mono">Our Products</CardTitle>
+        <CardTitle variant="mono">{t('title')}</CardTitle>
         <div className="flex items-center justify-center gap-[6px]">
           {slides.map((p, i) => (
             <button
-              aria-label={`Go to slide ${i + 1}`}
+              aria-label={t('goToSlide', { number: i + 1 })}
               onClick={() => carouselRef.current?.goTo(i)}
               key={p.id}
               className={cn('h-[10px] rounded-full transition-all duration-150', {
