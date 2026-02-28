@@ -16,8 +16,11 @@ import {
   StatusCard,
   ToolsCard,
 } from './components';
+import DarkScrollSection from './components/DarkScrollSection';
 import Header from './components/Header';
 import Heading from './components/Heading';
+import TeamSection from './components/TeamSection';
+import WaitlistSection from './components/WaitlistSection';
 
 import './page.css';
 
@@ -51,14 +54,11 @@ const fetchSneakPeekCount = ({ timeout = 1000 }) => {
         ['pathname', '/#sneak-peek'],
         ['type', 'action'],
       ]),
-    { cache: 'no-store' },
+    { next: { revalidate: 60 } },
   )
-    .then((res) => res.json())
+    .then((res) => (res.ok ? res.json() : { count: 0 }))
     .then((res) => res.count)
-    .catch((e) => {
-      console.error(e);
-      return 0;
-    });
+    .catch(() => 0);
 
   return withTimeout(responsePromise, 0, timeout);
 };
@@ -117,6 +117,10 @@ export default async function Home() {
             ))}
           </div>
         </main>
+        <DarkScrollSection>
+          <TeamSection />
+          <WaitlistSection />
+        </DarkScrollSection>
       </div>
     </div>
   );
