@@ -1,8 +1,10 @@
 'use client';
 
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import { LinkIcon } from '~/src/components/icons';
 import {
@@ -20,20 +22,14 @@ function hostname(url: string): string {
   return new URL(url).hostname;
 }
 
-/**
- * Split HTML content at <hr> boundaries and interleave images between sections.
- * Returns an array of { type: 'html' | 'image', content: string } blocks.
- */
 function buildContentBlocks(
   contentHtml: string,
   images: string[],
 ): Array<{ type: 'html'; content: string } | { type: 'image'; src: string }> {
   if (!contentHtml || contentHtml.trim().length === 0) {
-    // No markdown content — just return images
     return images.map((src) => ({ type: 'image', src }));
   }
 
-  // Split at <hr> or <hr/> or <hr /> tags
   const sections = contentHtml
     .split(/<hr\s*\/?\s*>/gi)
     .map((s) => s.trim())
@@ -42,15 +38,12 @@ function buildContentBlocks(
   const blocks: Array<{ type: 'html'; content: string } | { type: 'image'; src: string }> = [];
   let imgIdx = 0;
 
-  // Distribute images evenly across section gaps
-  // e.g. 5 sections + 4 images → image after section 1, 2, 3, 4
   const gaps = sections.length > 1 ? sections.length - 1 : 1;
   const imagesPerGap = images.length / gaps;
 
   for (let i = 0; i < sections.length; i++) {
     blocks.push({ type: 'html', content: sections[i] });
 
-    // Insert images after this section (distribute evenly)
     if (i < sections.length - 1 && imgIdx < images.length) {
       const targetImgCount = Math.round(imagesPerGap * (i + 1));
       while (imgIdx < targetImgCount && imgIdx < images.length) {
@@ -60,7 +53,6 @@ function buildContentBlocks(
     }
   }
 
-  // Remaining images at the end
   while (imgIdx < images.length) {
     blocks.push({ type: 'image', src: images[imgIdx] });
     imgIdx++;
@@ -80,8 +72,11 @@ export default function WorkCoverFlow({ works }: Props) {
 
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [scrollIndex, setScrollIndex] = useState(0);
 
-  // Sync URL query param → drawer state on mount / param change
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<ScrollTrigger | null>(null);
+
   useEffect(() => {
     const workSlug = searchParams.get('name');
     if (workSlug) {
@@ -124,8 +119,39 @@ export default function WorkCoverFlow({ works }: Props) {
     subtitle: work.tags?.slice(0, 2).join(' / '),
   }));
 
+  // ScrollTrigger: pin section + drive carousel index from page scroll
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const section = sectionRef.current;
+    if (!section || items.length === 0) return;
+
+    // Scroll distance = 150px per item (tunable)
+    const scrollPerItem = 150;
+    const totalScroll = scrollPerItem * (items.length - 1);
+
+    const trigger = ScrollTrigger.create({
+      trigger: section,
+      start: 'top top',
+      end: `+=${totalScroll}`,
+      pin: true,
+      scrub: 0.5,
+      onUpdate: (self) => {
+        const progress = self.progress; // 0 → 1
+        const idx = Math.round(progress * (items.length - 1));
+        setScrollIndex(idx);
+      },
+    });
+
+    triggerRef.current = trigger;
+
+    return () => {
+      trigger.kill();
+      triggerRef.current = null;
+    };
+  }, [items.length]);
+
   const selectedProject = selectedIndex !== null ? works[selectedIndex] : null;
-  const hasContent = selectedProject?.contentHtml && selectedProject.contentHtml.trim().length > 0;
 
   const contentBlocks = useMemo(() => {
     if (!selectedProject) return [];
@@ -136,15 +162,15 @@ export default function WorkCoverFlow({ works }: Props) {
   }, [selectedProject]);
 
   return (
-    <div className="flex h-[calc(100svh-240px)] w-full items-center overflow-hidden">
+    <div ref={sectionRef} className="flex h-svh w-full items-center overflow-hidden">
       <Drawer open={drawerOpen} onOpenChange={handleDrawerOpenChange}>
         <CoverFlow
           items={items}
           itemWidth={250}
           itemHeight={300}
-          initialIndex={3}
+          initialIndex={scrollIndex}
           enableReflection={false}
-          enableScroll={true}
+          enableScroll={false}
           scrollThreshold={100}
           onItemClick={(_item, index) => {
             setSelectedIndex(index);
@@ -156,10 +182,8 @@ export default function WorkCoverFlow({ works }: Props) {
         <DrawerContent className="min-h-[95%] max-h-[95%] justify-between gap-0 lg:max-w-[75%]">
           {selectedProject && (
             <>
-              {/* Scrollable Content — header + interleaved markdown + images */}
               <div className="flex-1 overflow-y-auto">
                 <div className="mx-auto mb-16 flex max-w-[85%] flex-col gap-8 py-6 sm:max-w-[80%]">
-                  {/* Header */}
                   <motion.div
                     key={selectedProject.slug}
                     initial={{ opacity: 0, y: 16 }}

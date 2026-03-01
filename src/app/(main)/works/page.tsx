@@ -4,6 +4,7 @@ import ClientRendered from '~/src/components/ClientRendered';
 import ViewLogger from '~/src/components/ViewCounter';
 import { getAllWorks } from '~/src/lib/works';
 
+import ElasticGrid from './components/ElasticGrid';
 import WorkCoverFlow from './components/WorkCoverFlow';
 
 export const metadata: Metadata = {
@@ -34,6 +35,9 @@ export default async function Work() {
       <main className="flex-1">
         <ClientRendered>
           <WorkCoverFlow works={works} />
+        </ClientRendered>
+        <ClientRendered>
+          <ElasticGrid works={works} />
         </ClientRendered>
       </main>
     </div>
