@@ -7,7 +7,7 @@ filters: ["products"]
 tags: ["Web Dashboard", "Academic", "Multi-Role", "Enterprise"]
 link: "https://treonstudio.com"
 aspect: 1.0
-preview: "/work/supabase-icons/preview.png"
+preview: "/home/porto/Ulbi.png"
 images:
   - "/work/supabase-icons/supabase-icons_00.png"
   - "/work/supabase-icons/supabase-icons.webp"

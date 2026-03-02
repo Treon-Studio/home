@@ -7,7 +7,7 @@ filters: ["community"]
 tags: ["Open Source", "Chrome Extension", "Mobile App", "Web App"]
 link: "https://treonstudio.com"
 aspect: 1.0
-preview: "/work/buka-branding/preview.png"
+preview: "/home/porto/muslimfy.png"
 images:
   - "/work/supabase-lw7/lw7-01.png"
   - "/work/supabase-lw7/lw7-02.png"

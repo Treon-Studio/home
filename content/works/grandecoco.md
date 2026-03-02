@@ -7,7 +7,7 @@ filters: ["products"]
 tags: ["Next.js", "Vercel", "Export", "B2B", "Agriculture"]
 link: "https://grandecoco.com"
 aspect: 1.0
-preview: "/work/dorscluc-merch/dorscluc_merch_preview.png"
+preview: "/home/porto/Grandecoco.png"
 images:
   - "/work/dorscluc-merch/dorscluc_merch1.png"
   - "/work/supabase-merch/supabase-merch.png"

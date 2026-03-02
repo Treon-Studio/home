@@ -7,7 +7,7 @@ filters: ["products"]
 tags: ["WordPress", "Company Profile", "Luxury", "Architecture"]
 link: "https://mataair.id"
 aspect: 1.0
-preview: "/work/memobottle/preview.png"
+preview: "/home/porto/mata-AIR.png"
 images:
   - "/work/memobottle/memobottle_00.jpg"
   - "/work/supabase-lw8/supabase0.png"

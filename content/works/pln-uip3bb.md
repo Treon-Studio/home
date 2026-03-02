@@ -7,7 +7,7 @@ filters: ["products"]
 tags: ["Next.js", "NocoDB", "Web App", "Enterprise", "Analytics"]
 link: "https://treonstudio.com"
 aspect: 1.0
-preview: "/work/elizabeths-flowers/preview.png"
+preview: "/home/porto/PLN-UIP3BB.png"
 images:
   - "/work/elizabeths-flowers/elizabethsflowers_01.png"
   - "/work/elizabeths-flowers/elizabethsflowers_02.png"

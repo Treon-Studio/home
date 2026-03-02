@@ -7,7 +7,7 @@ filters: ["products"]
 tags: ["ERP", "Web App", "Mobile App", "Construction", "Field Operations"]
 link: "https://treonstudio.com"
 aspect: 1.0
-preview: "/work/database-build/database-build-preview.png"
+preview: "/home/porto/investrack.png"
 images:
   - "/work/database-build/database-build.png"
   - "/work/supabase-lw12/supabase01.png"

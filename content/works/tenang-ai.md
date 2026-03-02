@@ -7,7 +7,7 @@ filters: ["products"]
 tags: ["Brand Strategy", "Design System", "Figma", "B2B Website", "Mental Health"]
 link: "https://treonstudio.com"
 aspect: 1.0
-preview: "/work/midnight-studio/midnight-studio_preview.png"
+preview: "/home/porto/tenang-ai.png"
 images:
   - "/work/midnight-studio/midnight-studio_00.png"
   - "/work/midnight-studio/midnight-studio_01.png"

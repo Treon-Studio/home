@@ -49,7 +49,8 @@ const sections: SectionData[] = [
     ],
   },
   {
-    sticker: '/home/cat-smile.png',
+    sticker: '/home/collab.webp',
+    stickerSize: 240,
     layout: 'cloud',
     descriptionKey: 'section3Description',
     items: [

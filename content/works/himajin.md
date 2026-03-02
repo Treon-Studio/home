@@ -7,7 +7,7 @@ filters: ["products"]
 tags: ["Brand Identity", "Mascot Design", "Website", "Pet Store"]
 link: "https://treonstudio.com"
 aspect: 1.0
-preview: "/work/infinum-beer/preview.png"
+preview: "/home/porto/himajin.png"
 images:
   - "/work/infinum-beer/infinumbeer_00.png"
   - "/work/infinum-beer/infinumbeer_01.png"

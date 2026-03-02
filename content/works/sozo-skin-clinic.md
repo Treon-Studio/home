@@ -7,7 +7,7 @@ filters: ["products"]
 tags: ["WordPress", "React", "Google Maps API", "Custom Plugin"]
 link: "https://sozoskinclinic.com"
 aspect: 1.0
-preview: "/work/supabase-homepage/preview.png"
+preview: "/home/porto/Sozo.png"
 images:
   - "/work/supabase-homepage/supabase01.png"
   - "/work/supabase-homepage/supabase02.png"

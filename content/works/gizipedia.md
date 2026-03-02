@@ -7,7 +7,7 @@ filters: ["products"]
 tags: ["Mobile App", "Health", "Nutrition", "React Native"]
 link: "https://treonstudio.com"
 aspect: 1.0
-preview: "/work/supabase-lw7/preview.png"
+preview: "/home/porto/gizi-pedia.png"
 images:
   - "/work/supabase-lw7/lw7-01.png"
   - "/work/supabase-lw7/lw7-02.png"

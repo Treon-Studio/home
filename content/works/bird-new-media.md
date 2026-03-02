@@ -7,7 +7,7 @@ filters: ["products"]
 tags: ["Next.js", "Vercel", "Video Production", "Portfolio"]
 link: "https://treonstudio.com"
 aspect: 1.0
-preview: "/work/supabase-lw8/preview.png"
+preview: "/home/porto/bird-media.png"
 images:
   - "/work/supabase-lw8/supabase0.png"
   - "/work/supabase-lw8/supabase1.png"

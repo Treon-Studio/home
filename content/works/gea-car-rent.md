@@ -7,7 +7,7 @@ filters: ["products"]
 tags: ["Brand Identity", "Logo Design", "Visual System", "Brand Guidelines"]
 link: "https://treonstudio.com"
 aspect: 1.0
-preview: "/work/infinum-honey/preview.png"
+preview: "/home/porto/gea-car-rent.png"
 images:
   - "/work/infinum-honey/honey_00.jpg"
   - "/work/infinum-honey/honey_01.jpg"

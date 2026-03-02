@@ -7,7 +7,7 @@ filters: ["products"]
 tags: ["Brand Identity", "Logo Design", "Website", "Property"]
 link: "https://treonstudio.com"
 aspect: 1.0
-preview: "/work/opera-posters/preview.png"
+preview: "/home/porto/tempat-teduh.png"
 images:
   - "/work/opera-posters/posters_00.png"
   - "/work/opera-posters/posters_01.png"

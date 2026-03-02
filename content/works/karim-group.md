@@ -7,7 +7,7 @@ filters: ["products"]
 tags: ["WordPress", "Custom Theme", "On-Page SEO", "Property"]
 link: "https://karimgroup.id"
 aspect: 1.0
-preview: "/work/havgrim/preview.png"
+preview: "/home/porto/karim-group.png"
 images:
   - "/work/havgrim/havgrim_00.png"
   - "/work/havgrim/havgrim_01.png"

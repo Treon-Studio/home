@@ -7,6 +7,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   return (
     <NextThemeProvider
       disableTransitionOnChange
+      forcedTheme="light"
       value={{
         light: 'theme-light',
         dark: 'theme-dark',
