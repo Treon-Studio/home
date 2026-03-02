@@ -7,7 +7,7 @@ filters: ["products"]
 tags: ["Web App", "Government", "Environmental", "Monitoring"]
 link: "https://treonstudio.com"
 aspect: 1.0
-preview: "/work/buka-studio-web/buka-web-preview.png"
+preview: "/home/porto/emoroa.png"
 images:
   - "/work/buka-studio-web/buka-web.png"
   - "/work/postcard/feedback-postcard_00.png"

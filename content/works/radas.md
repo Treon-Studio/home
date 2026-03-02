@@ -7,7 +7,7 @@ filters: ["products"]
 tags: ["CLI", "Web Dashboard", "Internal Tooling", "Developer Experience"]
 link: "https://treonstudio.com"
 aspect: 1.2
-preview: "/work/sketchbook/sketchbook_preview.png"
+preview: "/home/porto/radas.png"
 images:
   - "/work/sketchbook/sketchbook_1.png"
   - "/work/sketchbook/sketchbook_2.png"

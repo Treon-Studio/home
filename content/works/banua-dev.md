@@ -7,7 +7,7 @@ filters: ["community"]
 tags: ["Community", "Developer", "CLI Theme", "Kalimantan Selatan"]
 link: "https://treonstudio.com"
 aspect: 1.0
-preview: "/work/program-end/sign-off_preview.png"
+preview: "/home/porto/banua-dev.png"
 images:
   - "/work/program-end/sign-off01.png"
   - "/work/program-end/sign-off02.png"
