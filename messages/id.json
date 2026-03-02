@@ -112,7 +112,11 @@
     "community": "Komunitas",
     "hospitality": "Hospitality",
     "media": "Media",
-    "agency": "Agensi"
+    "agency": "Agensi",
+    "finance": "Keuangan",
+    "legal": "Legal",
+    "operational": "Operasional",
+    "quality": "Kualitas"
   },
   "waitlist": {
     "subscribe": "Berlangganan",

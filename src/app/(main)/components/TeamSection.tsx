@@ -12,7 +12,7 @@ type SectionData = {
   sticker: string;
   stickerSize?: number;
   descriptionKey: string;
-  items: { name: string; roleKey: string }[];
+  items: { name: string; roleKey: string; logo?: string }[];
   layout?: 'list' | 'cloud';
 };
 
@@ -21,21 +21,19 @@ const sections: SectionData[] = [
     sticker: '/home/cat-smile.png',
     descriptionKey: 'section1Description',
     items: [
-      { name: 'Muhammad Ridho', roleKey: 'creative' },
-      { name: 'Rizky Ananda', roleKey: 'engineer' },
-      { name: 'Fajar Nugraha', roleKey: 'engineer' },
-      { name: 'Dwi Kartika', roleKey: 'designer' },
-      { name: 'Andi Pratama', roleKey: 'engineer' },
-      { name: 'Siti Nurhaliza', roleKey: 'designer' },
-      { name: 'Budi Santoso', roleKey: 'engineer' },
-      { name: 'Putri Ayu', roleKey: 'creative' },
-      { name: 'Reza Firmansyah', roleKey: 'engineer' },
-      { name: 'Nadia Safitri', roleKey: 'designer' },
-      { name: 'Arif Rahman', roleKey: 'engineer' },
-      { name: 'Dian Purnama', roleKey: 'creative' },
-      { name: 'Yoga Permana', roleKey: 'engineer' },
-      { name: 'Lestari Dewi', roleKey: 'designer' },
-      { name: 'Hendra Wijaya', roleKey: 'engineer' },
+      { name: 'Alfano Nurtanio', roleKey: 'marketing' },
+      { name: 'Ananda Rifky H.', roleKey: 'engineer' },
+      { name: 'Fail Amirullah', roleKey: 'engineer' },
+      { name: 'Farid Al Arkham', roleKey: 'designer' },
+      { name: 'Ilham Naufal Rabbani', roleKey: 'engineer' },
+      { name: 'Irfan Khairullah', roleKey: 'designer' },
+      { name: 'Dhanny Chandra', roleKey: 'creative' },
+      { name: 'Tatag', roleKey: 'operational' },
+      { name: 'Wandi Purnomo', roleKey: 'engineer' },
+      { name: 'Yoogy Handi Nata', roleKey: 'quality' },
+      { name: 'Fatimah', roleKey: 'finance' },
+      { name: 'Wayne Aulya P.', roleKey: 'legal' },
+      { name: 'M. Ridho A.', roleKey: 'creative' },
     ],
   },
   {
@@ -43,9 +41,9 @@ const sections: SectionData[] = [
     stickerSize: 180,
     descriptionKey: 'section2Description',
     items: [
-      { name: 'Ahmad Fauzi', roleKey: 'strategy' },
-      { name: 'Diana Kusuma', roleKey: 'business' },
-      { name: 'Rahmat Hidayat', roleKey: 'technology' },
+      { name: 'Agus Fikri S.', roleKey: 'technology' },
+      { name: 'Ardiansyah', roleKey: 'business' },
+      { name: 'Dimas Prabowo', roleKey: 'technology' },
     ],
   },
   {
@@ -55,15 +53,15 @@ const sections: SectionData[] = [
     descriptionKey: 'section3Description',
     items: [
       { name: 'Banua Dev', roleKey: 'community' },
-      { name: 'Emroa', roleKey: 'hospitality' },
-      { name: 'Bird New Media', roleKey: 'media' },
-      { name: 'Kalografi', roleKey: 'creative' },
-      { name: 'Raion Digital', roleKey: 'agency' },
+      { name: 'KalselJS', roleKey: 'community', logo: '/home/partnerships/kalseljs-logo.png' },
+      { name: 'Potara Studio', roleKey: 'agency' },
+      { name: 'HimajinHobby', roleKey: 'community' },
+      { name: 'Lentera Digital', roleKey: 'agency' },
     ],
   },
 ];
 
-function LogoCloud({ items, isInView }: { items: { name: string; role: string }[]; isInView: boolean }) {
+function LogoCloud({ items, isInView }: { items: { name: string; role: string; logo?: string }[]; isInView: boolean }) {
   const [page, setPage] = useState(0);
   const perPage = 3;
   const totalPages = Math.ceil(items.length / perPage);
@@ -81,7 +79,7 @@ function LogoCloud({ items, isInView }: { items: { name: string; role: string }[
     <div className="mx-auto max-w-3xl">
       <div className="grid min-h-[80px] grid-cols-3 gap-x-12 md:gap-x-16">
         <AnimatePresence mode="wait">
-          {currentItems.map(({ name, role }, index) => (
+          {currentItems.map(({ name, role, logo }, index) => (
             <motion.div
               key={`${page}-${index}`}
               initial={{ opacity: 0, y: 16 }}
@@ -91,8 +89,19 @@ function LogoCloud({ items, isInView }: { items: { name: string; role: string }[
                 duration: 0.4,
                 delay: index * 0.08,
               }}
-              className="flex flex-col items-center justify-center gap-1"
+              className="flex flex-col items-center justify-end gap-2"
             >
+              <div className="flex h-12 w-full items-center justify-center">
+                {logo && (
+                  <Image
+                    src={logo}
+                    alt={`${name} logo`}
+                    width={80}
+                    height={48}
+                    className="max-h-12 w-auto object-contain opacity-80"
+                  />
+                )}
+              </div>
               <span className="text-center text-lg font-bold tracking-tight md:text-xl">{name}</span>
               <span className="text-text-muted text-xs uppercase tracking-wider">{role}</span>
             </motion.div>
@@ -107,7 +116,7 @@ function SectionBlock({ sticker, stickerSize, description, items, layout }: {
   sticker: string;
   stickerSize?: number;
   description: string;
-  items: { name: string; role: string }[];
+  items: { name: string; role: string; logo?: string }[];
   layout?: 'list' | 'cloud';
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -178,6 +187,7 @@ export default function TeamSection() {
           items={section.items.map((item) => ({
             name: item.name,
             role: t(item.roleKey),
+            logo: item.logo,
           }))}
           layout={section.layout}
         />

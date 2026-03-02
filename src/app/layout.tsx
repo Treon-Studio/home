@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     title: 'TreonStudio — Creative House from Indonesia',
     description: 'Creative house dari Indonesia — jasa web development, mobile app, dan design system untuk brand, startup, dan UMKM.',
     siteName: 'TreonStudio',
-    locale: 'id_ID',
+    locale: 'en_US',
     type: 'website',
   },
   twitter: {
@@ -171,7 +171,7 @@ const jsonLd = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
-      lang="id"
+      lang="en"
       suppressHydrationWarning
       className={`${inter.variable} ${archivo.variable} ${ibmPlexMono.variable} ${libertinusSerif.variable} font-sans`}
     >

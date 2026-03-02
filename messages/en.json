@@ -112,7 +112,11 @@
     "community": "Community",
     "hospitality": "Hospitality",
     "media": "Media",
-    "agency": "Agency"
+    "agency": "Agency",
+    "finance": "Finance",
+    "legal": "Legal",
+    "operational": "Operational",
+    "quality": "Quality"
   },
   "waitlist": {
     "subscribe": "Subscribe",

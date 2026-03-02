@@ -13,8 +13,8 @@ const messages: Record<Locale, typeof idMessages> = {
   en: enMessages,
 };
 
-const LocaleContext = createContext<Locale>('id');
-const SetLocaleContext = createContext<(locale: Locale) => void>(() => {});
+const LocaleContext = createContext<Locale>('en');
+const SetLocaleContext = createContext<(locale: Locale) => void>(() => { });
 
 export function useLocale() {
   return useContext(LocaleContext);
@@ -25,7 +25,7 @@ export function useSetLocale() {
 }
 
 export function LocaleProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>('id');
+  const [locale, setLocaleState] = useState<Locale>('en');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
