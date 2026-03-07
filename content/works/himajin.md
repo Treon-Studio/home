@@ -15,6 +15,7 @@ images:
   - "/work/infinum-merch/infinum_merch_03.png"
 description: "End-to-end brand identity for a South Kalimantan pet store — brand guidelines, visual elements, original mascot design, and a website that captures the warmth and wonder of animal companionship."
 hidden: false
+featured: true
 ---
 
 ### The Context

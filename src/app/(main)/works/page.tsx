@@ -28,13 +28,14 @@ export const metadata: Metadata = {
 export default async function Work() {
   const allWorks = await getAllWorks();
   const works = allWorks.filter((w) => !w.hidden);
+  const featuredWorks = works.filter((w) => w.featured);
 
   return (
     <div className="flex flex-1 flex-col">
       <ViewLogger pathname="/works" />
       <main className="flex-1">
         <ClientRendered>
-          <WorkCoverFlow works={works} />
+          <WorkCoverFlow works={featuredWorks} />
         </ClientRendered>
         <ClientRendered>
           <ElasticGrid works={works} />

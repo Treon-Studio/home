@@ -17,6 +17,7 @@ images:
   - "/work/infinum-posters/infinum-posters_02.png"
 description: "A 3-month brand transformation for a mental health platform — from existing platform audit to complete design guidelines and a high-fidelity B2B website prototype for enterprise audiences."
 hidden: false
+featured: true
 ---
 
 ### The Context

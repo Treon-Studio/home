@@ -15,6 +15,7 @@ images:
   - "/work/supabase-lw12/supabase03.png"
 description: "An ERP system purpose-built for construction management — reporting, record management, and real-time project-linked communication across web and mobile for field and office teams."
 hidden: false
+featured: true
 ---
 
 ### The Origin

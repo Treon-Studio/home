@@ -16,6 +16,7 @@ images:
   - "/work/supabase-lw7/lw7-05.png"
 description: "A mobile nutrition calculator and tracking app — comprehensive food database, real-time nutritional calculations, and personal goal tracking designed for daily use."
 hidden: false
+featured: true
 ---
 
 ### The Context

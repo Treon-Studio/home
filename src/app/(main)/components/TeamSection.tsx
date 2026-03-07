@@ -42,7 +42,6 @@ const sections: SectionData[] = [
     descriptionKey: 'section2Description',
     items: [
       { name: 'Agus Fikri S.', roleKey: 'technology' },
-      { name: 'Ardiansyah', roleKey: 'business' },
       { name: 'Dimas Prabowo', roleKey: 'technology' },
     ],
   },

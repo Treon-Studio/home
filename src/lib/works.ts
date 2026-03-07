@@ -22,6 +22,7 @@ export type WorkPost = {
   preview: string;
   images: string[];
   hidden: boolean;
+  featured: boolean;
   order: number;
   contentHtml: string;
 };
@@ -57,6 +58,7 @@ export async function getWorkBySlug(slug: string): Promise<WorkPost | null> {
     preview: data.preview || '',
     images: data.images || [],
     hidden: data.hidden ?? false,
+    featured: data.featured ?? false,
     order: data.order ?? 99,
     contentHtml,
   };
