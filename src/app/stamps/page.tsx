@@ -1,3 +1,5 @@
+import { Metadata } from 'next';
+
 import { cn, preloadImage } from '~/src/util';
 
 import Description from './components/Description';
@@ -6,6 +8,33 @@ import SVGFilters from './components/SVGFilters';
 import { collections, CollectionType } from './constants';
 
 import './page.css';
+
+export const metadata: Metadata = {
+  title: 'Digital Stamps Collection | TreonStudio — Koleksi Perangko Digital',
+  description:
+    'Koleksi perangko digital TreonStudio — reinterpretasi perangko vintage sebagai seni digital. Eksplorasi tipografi, sejarah, dan desain dalam format modern.',
+  keywords: [
+    'digital stamps',
+    'koleksi perangko digital',
+    'vintage stamps art',
+    'TreonStudio stamps',
+    'philately digital',
+    'seni perangko Indonesia',
+  ],
+  alternates: { canonical: '/stamps' },
+  openGraph: {
+    title: 'Digital Stamps Collection | TreonStudio',
+    description:
+      'Koleksi perangko digital — reinterpretasi perangko vintage sebagai seni digital. Eksplorasi tipografi, sejarah, dan desain.',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Digital Stamps Collection | TreonStudio',
+    description:
+      'Koleksi perangko digital — reinterpretasi perangko vintage sebagai seni digital. Eksplorasi tipografi, sejarah, dan desain.',
+  },
+};
 
 const preloadCollection = (collection: CollectionType) => {
   collections[collection].stamps.forEach((stamp) => {

@@ -89,22 +89,55 @@ export default async function Work({ params }: { params: Promise<{ slug: string 
 
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: project.title,
-    description: project.description,
-    image: project.preview ? `https://treonstudio.com${project.preview}` : undefined,
-    url: `https://treonstudio.com/works/${project.slug}`,
-    author: {
-      '@type': 'Organization',
-      name: 'TreonStudio',
-      url: 'https://treonstudio.com',
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: 'TreonStudio',
-      logo: { '@type': 'ImageObject', url: 'https://treonstudio.com/favicon.ico' },
-    },
-    keywords: project.tags.join(', '),
+    '@graph': [
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://treonstudio.com',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Works',
+            item: 'https://treonstudio.com/works',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: project.title,
+            item: `https://treonstudio.com/works/${project.slug}`,
+          },
+        ],
+      },
+      {
+        '@type': 'Article',
+        headline: project.title,
+        description: project.description,
+        image: project.preview ? `https://treonstudio.com${project.preview}` : undefined,
+        url: `https://treonstudio.com/works/${project.slug}`,
+        datePublished: '2024-01-01T00:00:00+07:00',
+        dateModified: new Date().toISOString(),
+        author: {
+          '@type': 'Organization',
+          name: 'TreonStudio',
+          url: 'https://treonstudio.com',
+        },
+        publisher: {
+          '@type': 'Organization',
+          name: 'TreonStudio',
+          logo: { '@type': 'ImageObject', url: 'https://treonstudio.com/favicon.ico' },
+        },
+        keywords: project.tags.join(', '),
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': `https://treonstudio.com/works/${project.slug}`,
+        },
+      },
+    ],
   };
 
   return (

@@ -51,11 +51,19 @@ export const metadata: Metadata = {
     icon: '/favicon.svg',
     apple: '/favicon.svg',
   },
+  alternates: {
+    languages: {
+      'en': 'https://treonstudio.com',
+      'id': 'https://treonstudio.com',
+      'x-default': 'https://treonstudio.com',
+    },
+  },
   openGraph: {
     title: 'TreonStudio — Creative House from Indonesia',
     description: 'Creative house dari Indonesia — jasa web development, mobile app, dan design system untuk brand, startup, dan UMKM.',
     siteName: 'TreonStudio',
     locale: 'en_US',
+    alternateLocale: ['id_ID'],
     type: 'website',
   },
   twitter: {

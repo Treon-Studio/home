@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
 import CardTitle from '~/src/components/ui/CardTitle';
@@ -384,6 +385,7 @@ function HighlightCard({ color, patternColor, bgPattern, iconName, label, title,
 type SlideConfig = Omit<HLCardProps, 'label' | 'description'> & {
   labelKey: string;
   descriptionKey: string;
+  href?: string;
 };
 
 const slideConfigs: SlideConfig[] = [
@@ -397,6 +399,7 @@ const slideConfigs: SlideConfig[] = [
     descriptionKey: 'investrack',
     rating: 4.6,
     completion: 0.45,
+    href: '/works/investrack',
   },
   {
     color: '#39A47B',
@@ -423,6 +426,7 @@ const slideConfigs: SlideConfig[] = [
     completion: 0.58,
     logoText: '/home/products/Logo-Text-Hunivo.svg',
     logoIcon: '/home/products/Logo-Icon-Hunivo.svg',
+    href: '/works/hunivo',
   },
   {
     color: '#078ade',
@@ -464,6 +468,7 @@ const slideConfigs: SlideConfig[] = [
     completion: 0.4,
     logoText: '/home/products/Logo-Text-Muslimfy.svg',
     logoIcon: '/home/products/Logo-Icon-Muslimfy.svg',
+    href: '/works/muslimfy-case-study',
   },
 ];
 
@@ -492,11 +497,20 @@ export default function PhotosCard() {
     return () => observer.disconnect();
   }, []);
 
-  const slides: CarouselItem[] = slideConfigs.map(({ labelKey, descriptionKey, ...rest }, i) => ({
-    id: String(i),
-    type: 'custom' as const,
-    content: <HighlightCard {...rest} label={t(labelKey)} description={t(descriptionKey)} />,
-  }));
+  const slides: CarouselItem[] = slideConfigs.map(({ labelKey, descriptionKey, href, ...rest }, i) => {
+    const cardContent = <HighlightCard {...rest} label={t(labelKey)} description={t(descriptionKey)} />;
+    return {
+      id: String(i),
+      type: 'custom' as const,
+      content: href ? (
+        <Link href={href} className="block h-full w-full">
+          {cardContent}
+        </Link>
+      ) : (
+        cardContent
+      ),
+    };
+  });
 
   return (
     <Card className="relative flex flex-col gap-5">

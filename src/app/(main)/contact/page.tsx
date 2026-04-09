@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   description:
     'Hubungi TreonStudio untuk konsultasi gratis. Jasa pembuatan website, aplikasi mobile, dan design system di Jakarta, Indonesia. WhatsApp, email, atau social media — kami siap bantu wujudkan ide digitalmu.',
   keywords: ['kontak TreonStudio', 'hubungi web developer Jakarta', 'konsultasi jasa website', 'hire developer Indonesia'],
+  alternates: { canonical: '/contact' },
   openGraph: {
     title: 'Hubungi Kami | TreonStudio',
     description: 'Hubungi TreonStudio untuk konsultasi gratis — jasa web development, mobile app, dan design system di Jakarta.',
