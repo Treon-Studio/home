@@ -29,7 +29,7 @@ const sections: SectionData[] = [
     descriptionKey: 'section1Description',
     items: [
       { name: 'Alfano Nurtanio', roleKey: 'marketing', href: 'https://alfanonurtanio.pages.dev/' },
-      { name: 'Ananda Rifky H.', roleKey: 'engineer', href: 'https://linkedin.com/in/anandarifkyh' },
+      { name: 'Ananda Rifky H.', roleKey: 'engineer', href: 'https://rifkiystark-portfolio.vercel.app/' },
       { name: 'Fail Amirullah', roleKey: 'engineer', href: 'https://failamir.tech' },
       { name: 'Farid Al Arkham', roleKey: 'designer', href: 'https://arkamalfarid.pages.dev/' },
       { name: 'Ilham Naufal Rabbani', roleKey: 'engineer', href: 'https://www.ilhamarbani.com/' },

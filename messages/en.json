@@ -116,7 +116,8 @@
     "finance": "Finance",
     "legal": "Legal",
     "operational": "Operational",
-    "quality": "Quality"
+    "quality": "Quality",
+    "marketing": "Marketing"
   },
   "waitlist": {
     "subscribe": "Subscribe",
