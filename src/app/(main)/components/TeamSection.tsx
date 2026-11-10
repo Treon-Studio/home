@@ -35,7 +35,7 @@ const sections: SectionData[] = [
       { name: 'Ilham Naufal Rabbani', roleKey: 'engineer', href: 'https://www.ilhamarbani.com/' },
       { name: 'Irfan Khairullah', roleKey: 'designer', href: 'https://linkedin.com/in/irfankhairullah' },
       { name: 'Dhanny Chandra', roleKey: 'creative', href: 'https://linkedin.com/in/dhannychandra' },
-      { name: 'Tatag', roleKey: 'operational', href: 'https://tataghandyono.pages.dev/' },
+      { name: 'Tatag', roleKey: 'operational', href: 'http://tataghardaya.pages.dev/' },
       { name: 'Wandi Purnomo', roleKey: 'engineer', href: 'https://linkedin.com/in/wandipurnomo' },
       { name: 'Yoogy Handi Nata', roleKey: 'quality', href: 'https://linkedin.com/in/yoogyhandinata' },
       { name: 'Fatimah', roleKey: 'finance', href: 'https://linkedin.com/in/fatimah' },
